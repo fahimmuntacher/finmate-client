@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
-import "./navbar.css"
+import "./navbar.css";
+import { CiLogin } from "react-icons/ci";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
@@ -9,26 +10,13 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink
-          to="/"
-        >
-          Home
-        </NavLink>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink
-          to="/add-transaction"
-          
-        >
-          Add Transaction
-        </NavLink>
+        <NavLink to="/add-transaction">Add Transaction</NavLink>
       </li>
       <li>
-        <NavLink
-          to="/about-us"
-        >
-          About Us
-        </NavLink>
+        <NavLink to="/about-us">About Us</NavLink>
       </li>
     </>
   );
@@ -79,19 +67,16 @@ const Navbar = () => {
         {/* Right */}
         <div className="navbar-end flex gap-2.5">
           {user ? (
-            <span className="text-gray-700 font-medium">
-              Hi, {user?.displayName || "User"}
+            <span className="text-gray-700 font-medium flex items-center gap-2.5">
+              Hi, <span className="text-green-600 font-bold">{user.displayName.split(" ")[0] || "User"}</span>
+              <Link to="/my-profile"><img src={user.photoURL} alt=""  className=" rounded-[50%] w-12 h-12 border-3 border-green-500"/></Link>
             </span>
           ) : (
             <>
-              <Link to="/login">
-                <button className="px-4 py-2 rounded-xl border border-[#00C896] text-[#00C896] hover:bg-[#00C896] hover:text-white transition-all">
-                  Login
-                </button>
-              </Link>
+             
               <Link to="/register">
-                <button className="px-4 py-2 rounded-xl bg-[#00C896] text-white hover:bg-[#00b682] transition-all">
-                  Register
+                <button className="px-4 py-2 text-xl font-sembold rounded-xl bg-[#00C896] text-white hover:bg-white hover:text-[#0a906e] border-2  flex items-center gap-2.5 cursor-pointer">
+                  <CiLogin></CiLogin> Register
                 </button>
               </Link>
             </>
