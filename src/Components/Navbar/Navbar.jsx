@@ -1,53 +1,104 @@
-import { NavLink } from "react-router";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
+import "./navbar.css"
 
 const Navbar = () => {
-    const links = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li></li>
+  const { user } = useContext(AuthContext);
+
+  const links = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/add-transaction"
+          
+        >
+          Add Transaction
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/about-us"
+        >
+          About Us
+        </NavLink>
+      </li>
     </>
+  );
+
   return (
-    <div className="navbar bg-base-100 shadow-sm">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="navbar max-w-7xl mx-auto px-4 py-2">
+        {/* Left */}
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
+              {links}
+            </ul>
           </div>
-          <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a>Item 1</a>
-            </li>
+
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold text-[#00C896]">
+            Fin<span className="text-black">mate</span>
+          </Link>
+        </div>
+
+        {/* Center */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal gap-4 text-lg font-medium text-gray-700">
+            {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+
+        {/* Right */}
+        <div className="navbar-end flex gap-2.5">
+          {user ? (
+            <span className="text-gray-700 font-medium">
+              Hi, {user?.displayName || "User"}
+            </span>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className="px-4 py-2 rounded-xl border border-[#00C896] text-[#00C896] hover:bg-[#00C896] hover:text-white transition-all">
+                  Login
+                </button>
+              </Link>
+              <Link to="/register">
+                <button className="px-4 py-2 rounded-xl bg-[#00C896] text-white hover:bg-[#00b682] transition-all">
+                  Register
+                </button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
-    </div>
+    </nav>
   );
 };
 

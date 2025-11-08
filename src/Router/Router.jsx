@@ -7,6 +7,8 @@ import AddTransaction from "../Pages/AddTransaction/AddTransaction";
 import MyTransactions from "../Pages/MyTransactions/MyTransactions";
 import Reports from "../Pages/Reports/Reports";
 import NotFound from "../Pages/NotFoundPage/NotFound";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,8 +25,12 @@ const router = createBrowserRouter([
             element: <Login></Login>
         },
         {
+            path: "about-us",
+            element: <AboutUs></AboutUs>
+        },
+        {
           path: "add-transaction",
-          element: <AddTransaction></AddTransaction>
+          element: <PrivateRoute><AddTransaction></AddTransaction></PrivateRoute>
         },
         {
           path: "my-transactions",

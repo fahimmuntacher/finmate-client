@@ -1,0 +1,7 @@
+a:hover{
+    color: #049772;
+}
+a.active{
+    color: #00C896;
+    font-weight: bold;
+}
