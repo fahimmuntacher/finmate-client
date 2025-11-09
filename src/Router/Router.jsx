@@ -12,6 +12,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import PublicRoute from "../PublicRoute/PublicRoute";
 import TransactionDetail from "../Pages/TransactionDetail/TransactionDetail";
+import EditTransaction from "../Pages/EditTransaction/EditTransaction";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,10 +73,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/transaction-detail/:id",
+        path: "/my-transactions/transaction/:id",
         element: (
           <PrivateRoute>
             <TransactionDetail></TransactionDetail>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-transactions/transaction-edit/:id",
+        element: (
+          <PrivateRoute>
+            <EditTransaction></EditTransaction>
           </PrivateRoute>
         ),
       },
