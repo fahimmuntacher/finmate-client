@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import budgetingImg from "../../../assets/budgeting.png"; // illustration for Budgeting Tips
-import planningImg from "../../../assets/planning.png"; // illustration for Financial Planning
+import budgetingImg from "../../../assets/budgeting.png"; 
+import planningImg from "../../../assets/planning.png";
 
 const StaticSections = () => {
   return (

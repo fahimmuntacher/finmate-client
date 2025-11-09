@@ -15,7 +15,7 @@ const HeroBanner = () => {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-green-600 mb-4">
-            Take Control of Your Finances
+            Master your money, Master your future.
           </h1>
           <p className="text-gray-700 text-lg mb-6">
             Track your income, expenses, and savings goals with{" "}
