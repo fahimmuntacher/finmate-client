@@ -9,7 +9,6 @@ import {  useLocation, useNavigate } from "react-router";
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const [show, setShow] = useState(false);
-  
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/my-profile";

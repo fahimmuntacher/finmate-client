@@ -42,7 +42,7 @@ const Register = () => {
     signInWithGoogle()
     .then(res => {
         console.log(res);
-        toast.success("Account Created Successfully!", {
+        toast.success("Log in Successfully!", {
           position: "bottom-right"
         })
         navigate('/my-profile');

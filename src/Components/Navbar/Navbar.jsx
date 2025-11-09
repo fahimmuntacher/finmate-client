@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import "./navbar.css";
 import { CiLogin } from "react-icons/ci";
+import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
   const { user, loading } = useContext(AuthContext);
@@ -15,9 +16,21 @@ const Navbar = () => {
       <li>
         <NavLink to="/add-transaction">Add Transaction</NavLink>
       </li>
+      {
+        user && <>
+          <li>
+            <NavLink to="my-transactions">My Transactions</NavLink>
+          </li>
+          <li>
+            <NavLink to="/reports">Reports</NavLink>
+          </li>
+
+        </>
+      }
       <li>
         <NavLink to="/about-us">About Us</NavLink>
       </li>
+      
     </>
   );
 
@@ -52,8 +65,9 @@ const Navbar = () => {
           </div>
 
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-[#00C896]">
-            Fin<span className="text-black">mate</span>
+          <Link to="/" className= "flex items-center gap-2">
+            <img src={logo} alt="" className = "w-15"/>
+            <h1 className= "sm:block hidden text-2xl font-bold text-[#00C896]">Fin<span className="text-black">mate</span></h1>
           </Link>
         </div>
 
@@ -68,12 +82,23 @@ const Navbar = () => {
         <div className="navbar-end flex gap-2.5">
           {user ? (
             <span className="text-gray-700 font-medium flex items-center gap-2.5">
-              Hi, <span className="text-green-600 font-bold">{user.displayName.split(" ")[0] || "User"}</span>
-              <Link to="/my-profile"><img src={user.photoURL || "https://i.ibb.co.com/sJF5Gzmh/blank-profile-picture-973460-1280.webp"} alt=""  className=" rounded-[50%] w-12 h-12 border-3 border-green-500"/></Link>
+              Hi,{" "}
+              <span className="text-green-600 font-bold">
+                {user.displayName.split(" ")[0] || "User"}
+              </span>
+              <Link to="/my-profile">
+                <img
+                  src={
+                    user.photoURL ||
+                    "https://i.ibb.co.com/sJF5Gzmh/blank-profile-picture-973460-1280.webp"
+                  }
+                  alt=""
+                  className=" rounded-[50%] w-12 h-12 border-3 border-green-500"
+                />
+              </Link>
             </span>
           ) : (
             <>
-             
               <Link to="/register">
                 <button className="px-4 py-2 text-xl font-sembold rounded-xl bg-[#00C896] text-white hover:bg-white hover:text-[#0a906e] border-2  flex items-center gap-2.5 cursor-pointer">
                   <CiLogin></CiLogin> Register

@@ -100,7 +100,7 @@ const MyProfile = () => {
           onClick={handleSignOut}
           className="w-full border border-red-400 text-red-500 font-semibold py-2 rounded-lg hover:bg-red-50 transition-all duration-200 mt-4"
         >
-          Sign Out
+          Log Out
         </button>
 
         {/* Update Profile Modal */}

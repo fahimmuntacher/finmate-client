@@ -17,35 +17,59 @@ const router = createBrowserRouter([
     element: <MainLayout></MainLayout>,
     errorElement: <NotFound></NotFound>,
     children: [
-        { index: true, element: <Home></Home> },
-        {
-            path: "register",
-            element:<PublicRoute><Register></Register></PublicRoute>
-        }, 
-        {
-            path: "login",
-            element: <PublicRoute><Login></Login></PublicRoute>
-        },
-        {
-            path: "about-us",
-            element: <AboutUs></AboutUs>
-        },
-        {
-          path: "add-transaction",
-          element: <PrivateRoute><AddTransaction></AddTransaction></PrivateRoute>
-        },
-        {
-          path: "/my-profile",
-          element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
-        },
-        {
-          path: "my-transactions",
-          element: <MyTransactions></MyTransactions>
-        },
-        {
-          path: "reports",
-          element: <Reports></Reports>
-        },
+      { index: true, element: <Home></Home> },
+      {
+        path: "register",
+        element: (
+          <PublicRoute>
+            <Register></Register>
+          </PublicRoute>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <PublicRoute>
+            <Login></Login>
+          </PublicRoute>
+        ),
+      },
+      {
+        path: "about-us",
+        element: <AboutUs></AboutUs>,
+      },
+      {
+        path: "add-transaction",
+        element: (
+          <PrivateRoute>
+            <AddTransaction></AddTransaction>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-transactions",
+        element: (
+          <PrivateRoute>
+            <MyTransactions></MyTransactions>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/reports",
+        element: (
+          <PrivateRoute>
+            <Reports></Reports>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
