@@ -4,8 +4,8 @@ import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import NoTransaction from "./NoTransaction";
 
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
@@ -56,6 +56,8 @@ const MyTransactions = () => {
                 text: "Your transaction has been deleted.",
                 icon: "success",
               });
+              const remaingingTrans = transactions.filter( t => t._id !== id);
+              setTransactions(remaingingTrans)
             }
           });
 
@@ -75,7 +77,7 @@ const MyTransactions = () => {
   if (loading) return <Spinner></Spinner>;
 
   return (
-    <div className="bg-linear-to-b from-green-100 to bg-green-50">
+    <div className="min-h-screen bg-linear-to-b from-green-100 to bg-green-50">
       <div className="max-w-5xl mx-auto py-10 px-4 ">
         <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">
           My Transactions
@@ -113,9 +115,7 @@ const MyTransactions = () => {
 
         {/* Transactions List */}
         {transactions.length === 0 ? (
-          <p className="text-center text-gray-500 mt-10">
-            No transactions found.
-          </p>
+          <NoTransaction></NoTransaction>
         ) : (
           <motion.div
             className="grid gap-6"
