@@ -11,7 +11,8 @@ const Register = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || "/";
+  const from = location.state?.from?.pathname || "/my-profile";
+ 
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ const Register = () => {
         updateUserProfile(name, photoURL)
           .then((res) => {
             console.log(res);
+            navigate(from, { replace: true });
             toast.success("Account Created Successfully")
           })
           .catch((err) => {
@@ -43,7 +45,7 @@ const Register = () => {
         toast.success("Account Created Successfully!", {
           position: "bottom-right"
         })
-        navigate(from, {replace: true});
+        navigate('/my-profile');
     })
     .catch(err => {
         console.log(err);
@@ -164,13 +166,20 @@ const Register = () => {
           </motion.button>
         </motion.form>
 
+        {/* divider */}
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <span className="px-3 text-gray-400 text-sm">OR</span>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
           whileTap={{ scale: 0.97 }}
           onClick={googleSignIn}
-          className="btn w-full flex items-center justify-center gap-2 rounded-2xl mt-2.5 text-lg bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md transition-all"
+          className="btn w-full flex items-center justify-center gap-2 rounded-2xl mt-2.5 text-lg bg-white text-gray-700 shadow-sm hover:shadow-md transition-all"
         >
           <svg
             aria-label="Google logo"

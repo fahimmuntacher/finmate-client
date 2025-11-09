@@ -5,7 +5,7 @@ import "./navbar.css";
 import { CiLogin } from "react-icons/ci";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const links = (
     <>
