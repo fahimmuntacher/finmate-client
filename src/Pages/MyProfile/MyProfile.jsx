@@ -43,13 +43,13 @@ const MyProfile = () => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-100 via-white to-green-200 p-6"
+      className="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-green-100 via-white to-green-200 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 w-full max-w-md text-center border border-green-100">
-        <h1 className="text-3xl font-bold text-green-500 mb-2.5">My Profile</h1>
+        <h1 className="text-3xl font-bold text-green-500 mb-4">{name}</h1>
 
         <img
           src={photo || "https://i.ibb.co/sJF5Gzmh/blank-profile-picture-973460-1280.webp"}

@@ -3,27 +3,36 @@ import { AuthContext } from "../../Context/AuthContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import transactionIllustration from "../../assets/trasaction.jpg";
+import axios from "axios";
 
 const AddTransaction = () => {
   const { user } = useContext(AuthContext);
 
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState();
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.success("Transaction Added Successfully!");
+
     setType("Income");
     setCategory("");
-    setAmount("");
+    setAmount();
     setDescription("");
     setDate("");
-    const email = e.target.email.value;
-    const transaction = { type, category, amount, description, date, email };
-    console.log(transaction);
+    const userEmail = e.target.email.value;
+    const userName = e.target.userName.value;
+    const newTransaction = { type, category, amount, description, date, userEmail, userName};
+    axios
+      .post("http://localhost:3000/transactions", newTransaction)
+      .then((data) => {
+        console.log(data.data);
+        if (data.data.insertedId) {
+          toast.success("Transaction Added Successfully!");
+        }
+      });
   };
 
   return (
@@ -157,6 +166,7 @@ const AddTransaction = () => {
                 </label>
                 <input
                   type="text"
+                  name="userName"
                   value={user?.displayName || ""}
                   readOnly
                   className="w-full border bg-gray-100 rounded-lg px-3 py-2 text-gray-600 cursor-not-allowed"
@@ -169,7 +179,7 @@ const AddTransaction = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full bg-green-600 text-white font-semibold py-2 rounded-lg shadow-md transition-all"
+              className="w-full bg-[#00C896] text-white font-semibold py-2 rounded-lg shadow-md transition-all"
             >
               Add Transaction
             </motion.button>
