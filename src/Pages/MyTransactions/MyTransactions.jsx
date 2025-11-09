@@ -3,6 +3,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
@@ -66,14 +67,14 @@ const MyTransactions = () => {
                   <th>Type</th>
                   <th>Category</th>
                   <th>Amount</th>
-                  <th>Description</th>
                   <th>Date</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((t, index) => (
+                {transactions.map((trans, index) => (
                   <motion.tr
-                    key={t._id}
+                    key={trans._id}
                     className="hover:bg-green-50 transition-all text-gray-700"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -82,19 +83,42 @@ const MyTransactions = () => {
                     <td>{index + 1}</td>
                     <td
                       className={`font-semibold ${
-                        t.type === "Income"
+                        trans.type === "Income"
                           ? "text-green-600"
                           : "text-red-500"
                       }`}
                     >
-                      {t.type}
+                      {trans.type}
                     </td>
-                    <td>{t.category}</td>
+                    <td>{trans.category}</td>
                     <td className="font-semibold">
-                      {t.type === "Expense" ? "-" : "+"}${t.amount}
+                      {trans.type === "Expense" ? "-" : "+"}${trans.amount}
                     </td>
-                    <td>{t.description}</td>
-                    <td>{new Date(t.date).toLocaleDateString()}</td>
+                    
+                    <td>{new Date(trans.date).toLocaleDateString()}</td>
+                    <td className="flex gap-2 justify-center py-2">
+                    {/* View Details */}
+                    <Link to={`/transaction-detail/${trans._id}`}>
+                      <button className="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-lg cursor-pointer">
+                        View
+                      </button>
+                    </Link>
+
+                    {/* Update */}
+                    <Link to={`/edit-transaction/${trans._id}`}>
+                      <button className="px-3 py-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer">
+                        Update
+                      </button>
+                    </Link>
+
+                    {/* Delete */}
+                    <button
+                      
+                      className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </td>
                   </motion.tr>
                 ))}
               </tbody>
