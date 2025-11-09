@@ -3,10 +3,15 @@ import { motion } from "framer-motion";
 import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { Navigate, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -20,6 +25,7 @@ const Register = () => {
         updateUserProfile(name, photoURL)
           .then((res) => {
             console.log(res);
+            toast.success("Account Created Successfully")
           })
           .catch((err) => {
             console.log(err);
@@ -29,6 +35,20 @@ const Register = () => {
         console.log(err);
       });
   };
+
+  const googleSignIn = () => {
+    signInWithGoogle()
+    .then(res => {
+        console.log(res);
+        toast.success("Account Created Successfully!", {
+          position: "bottom-right"
+        })
+        navigate(from, {replace: true});
+    })
+    .catch(err => {
+        console.log(err);
+    })
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#E6FFF5] to-white px-4">
@@ -149,6 +169,7 @@ const Register = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
           whileTap={{ scale: 0.97 }}
+          onClick={googleSignIn}
           className="btn w-full flex items-center justify-center gap-2 rounded-2xl mt-2.5 text-lg bg-white text-gray-700 border border-gray-200 shadow-sm hover:shadow-md transition-all"
         >
           <svg

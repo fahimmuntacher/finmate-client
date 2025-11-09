@@ -9,7 +9,7 @@ const PrivateRoute = ({children}) => {
         return children;
     }
 
-    return <Navigate state={location?.pathname} to="/register"></Navigate>
+    return <Navigate to="/register" state={{from: location?.pathname}} replace></Navigate>
 
 };
 

@@ -53,11 +53,11 @@ const AuthContextProvider = ({ children }) => {
     };
   }, []);
 
-  const updateUserProfile = (displayName, photoURL, email) => {
+  const updateUserProfile = (displayName, photoURL) => {
         return updateProfile(auth.currentUser, {
             displayName, 
-            photoURL,
-            email
+            photoURL
+            
         })
   }
 

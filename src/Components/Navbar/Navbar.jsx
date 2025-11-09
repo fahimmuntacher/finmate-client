@@ -69,7 +69,7 @@ const Navbar = () => {
           {user ? (
             <span className="text-gray-700 font-medium flex items-center gap-2.5">
               Hi, <span className="text-green-600 font-bold">{user.displayName.split(" ")[0] || "User"}</span>
-              <Link to="/my-profile"><img src={user.photoURL} alt=""  className=" rounded-[50%] w-12 h-12 border-3 border-green-500"/></Link>
+              <Link to="/my-profile"><img src={user.photoURL || "https://i.ibb.co.com/sJF5Gzmh/blank-profile-picture-973460-1280.webp"} alt=""  className=" rounded-[50%] w-12 h-12 border-3 border-green-500"/></Link>
             </span>
           ) : (
             <>

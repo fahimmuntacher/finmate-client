@@ -10,6 +10,7 @@ import NotFound from "../Pages/NotFoundPage/NotFound";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyProfile from "../Pages/MyProfile/MyProfile";
+import PublicRoute from "../PublicRoute/PublicRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,11 +20,11 @@ const router = createBrowserRouter([
         { index: true, element: <Home></Home> },
         {
             path: "register",
-            element:<Register></Register>
+            element:<PublicRoute><Register></Register></PublicRoute>
         }, 
         {
             path: "login",
-            element: <Login></Login>
+            element: <PublicRoute><Login></Login></PublicRoute>
         },
         {
             path: "about-us",
