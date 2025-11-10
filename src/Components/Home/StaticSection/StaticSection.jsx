@@ -44,7 +44,7 @@ const StaticSections = () => {
           <img
             src={planningImg}
             alt="Financial Planning"
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-md mx-auto rounded-2xl"
           />
         </div>
         <div className="flex-1 text-center md:text-left">
