@@ -6,7 +6,7 @@ import { CiLogin } from "react-icons/ci";
 import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const links = (
     <>
@@ -16,26 +16,24 @@ const Navbar = () => {
       <li>
         <NavLink to="/add-transaction">Add Transaction</NavLink>
       </li>
-      {
-        user && <>
+      {user && (
+        <>
           <li>
             <NavLink to="my-transactions">My Transactions</NavLink>
           </li>
           <li>
             <NavLink to="/reports">Reports</NavLink>
           </li>
-
         </>
-      }
+      )}
       <li>
         <NavLink to="/about-us">About Us</NavLink>
       </li>
-      
     </>
   );
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-white/10 backdrop-blur-md shadow-sm ">
       <div className="navbar max-w-7xl mx-auto px-4 py-2">
         {/* Left */}
         <div className="navbar-start">
@@ -65,9 +63,11 @@ const Navbar = () => {
           </div>
 
           {/* Logo */}
-          <Link to="/" className= "flex items-center gap-2">
-            <img src={logo} alt="" className = "w-15"/>
-            <h1 className= "sm:block hidden text-2xl font-bold text-[#00C896]">Fin<span className="text-black">mate</span></h1>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="" className="w-15" />
+            <h1 className="sm:block hidden text-2xl font-bold text-[#00C896]">
+              Fin<span className="text-black">mate</span>
+            </h1>
           </Link>
         </div>
 
