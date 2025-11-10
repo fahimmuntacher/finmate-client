@@ -8,15 +8,15 @@ import Swal from "sweetalert2";
 import NoTransaction from "./NoTransaction";
 import { toast } from "react-toastify";
 
-
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
-  const [updateId , setUpdateId] = useState(null)
-  const navigate = useNavigate()
+  const [updateId, setUpdateId] = useState(null);
+  const [deafult, setDefault] = useState(null);
+  const navigate = useNavigate();
 
   // updated data
   const [amount, setAmount] = useState("");
@@ -81,30 +81,38 @@ const MyTransactions = () => {
     });
   };
 
+  // specific transaction
+
+  const specificTransaction = (id) => {
+    axios.get(`http://localhost:3000/transactions/${id}`).then((data) => {
+      setDefault(data.data);
+      console.log(deafult);
+    });
+  };
+
   // edit transaction
   const updateTransaction = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const updateTrans = {
       type,
       category,
       amount: parseFloat(amount),
       description,
-      data,
-      createdAt : new Date()
-    }
+      date,
+      createdAt: new Date(),
+    };
     console.log(updateTrans);
 
-    axios.put(`http://localhost:3000/transactions/${updateId}`, updateTrans)
-    .then(data => {
-      console.log("data after update",data);
-      fetchTransactions()
-      document.getElementById("my_modal_5").close();
-      toast.success("Updated Transaction successfully!")
-      navigate(`/my-transactions/transaction/${updateId}`)
-
-    })
+    axios
+      .put(`http://localhost:3000/transactions/${updateId}`, updateTrans)
+      .then((data) => {
+        console.log("data after update", data);
+        fetchTransactions();
+        document.getElementById("my_modal_5").close();
+        toast.success("Updated Transaction successfully!");
+        navigate(`/my-transactions/transaction/${updateId}`);
+      });
   };
-
 
   useEffect(() => {
     if (user?.email) fetchTransactions();
@@ -192,8 +200,9 @@ const MyTransactions = () => {
 
                   <button
                     onClick={() => {
-                      document.getElementById("my_modal_5").showModal();
                       setUpdateId(t._id);
+                      specificTransaction(t._id);
+                      document.getElementById("my_modal_5").showModal();
                     }}
                     className="px-3 py-1 rounded-lg border border-yellow-500 text-yellow-600 hover:bg-yellow-50 transition-all cursor-pointer"
                   >
@@ -229,7 +238,7 @@ const MyTransactions = () => {
                   Type
                 </label>
                 <select
-                  value={type}
+                  defaultValue={deafult?.type}
                   onChange={(e) => setType(e.target.value)}
                   className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
@@ -244,7 +253,7 @@ const MyTransactions = () => {
                   Category
                 </label>
                 <select
-                  value={category}
+                  defaultValue={deafult?.category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
@@ -275,7 +284,7 @@ const MyTransactions = () => {
                 <input
                   type="number"
                   name="amount"
-                  // defaultValue={amount}
+                  defaultValue={deafult?.amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
                   placeholder="Enter amount"
@@ -289,7 +298,7 @@ const MyTransactions = () => {
                 </label>
                 <textarea
                   name="description"
-                  // defaultValue={description}
+                  defaultValue={deafult?.description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows="3"
                   className="textarea textarea-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
@@ -305,7 +314,7 @@ const MyTransactions = () => {
                 <input
                   type="date"
                   name="date"
-                  // defaultValue={date?.slice(0, 10)}
+                  defaultValue={deafult?.date}
                   onChange={(e) => setDate(e.target.value)}
                   className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
                 />

@@ -3,6 +3,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const MyProfile = () => {
   const { user, updateUserProfile, signOutUser } = useContext(AuthContext);
@@ -40,6 +41,10 @@ const MyProfile = () => {
       console.log(err);
     }
   };
+
+  if(loading){
+    return <Spinner></Spinner>
+  }
 
   return (
     <motion.div
