@@ -168,19 +168,6 @@ const TransactionDetail = () => {
             >
               Close
             </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              className="px-4 py-2 rounded-lg bg-[#00C896] text-lg text-white cursor-pointer"
-              style={{
-                background: `linear-gradient(90deg, ${accent}, #00a67a}`,
-              }}
-              onClick={() => {
-                navigate(`/edit-transaction/${id}`);
-              }}
-            >
-              Edit Transaction
-            </motion.button>
           </div>
         </motion.div>
       </div>
