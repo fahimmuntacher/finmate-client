@@ -24,7 +24,8 @@ const AddTransaction = () => {
     setDate("");
     const userEmail = e.target.email.value;
     const userName = e.target.userName.value;
-    const newTransaction = { type, category, amount, description, date, userEmail, userName};
+    const createdAt = new Date();
+    const newTransaction = { type, category, amount, description, date, userEmail, userName, createdAt};
     axios
       .post("http://localhost:3000/transactions", newTransaction)
       .then((data) => {

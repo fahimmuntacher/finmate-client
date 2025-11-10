@@ -3,9 +3,11 @@ import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { data, Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import NoTransaction from "./NoTransaction";
+import { toast } from "react-toastify";
+
 
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +15,13 @@ const MyTransactions = () => {
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
+  const [updateId , setUpdateId] = useState(null)
+  const navigate = useNavigate()
+
+  // updated data
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
 
   // Filter & sort state
   const [filterType, setFilterType] = useState("");
@@ -73,9 +82,29 @@ const MyTransactions = () => {
   };
 
   // edit transaction
-  const editTransaction = (id) => {
-    console.log(id);
+  const updateTransaction = (e) => {
+    e.preventDefault()
+    const updateTrans = {
+      type,
+      category,
+      amount: parseFloat(amount),
+      description,
+      data,
+      createdAt : new Date()
+    }
+    console.log(updateTrans);
+
+    axios.put(`http://localhost:3000/transactions/${updateId}`, updateTrans)
+    .then(data => {
+      console.log("data after update",data);
+      fetchTransactions()
+      document.getElementById("my_modal_5").close();
+      toast.success("Updated Transaction successfully!")
+      navigate(`/my-transactions/transaction/${updateId}`)
+
+    })
   };
+
 
   useEffect(() => {
     if (user?.email) fetchTransactions();
@@ -159,15 +188,16 @@ const MyTransactions = () => {
                     </button>
                   </Link>
 
-                  {/* Edit button */}
+                  {/* update button */}
 
                   <button
-                    onClick={() =>
-                      document.getElementById("my_modal_5").showModal()
-                    }
+                    onClick={() => {
+                      document.getElementById("my_modal_5").showModal();
+                      setUpdateId(t._id);
+                    }}
                     className="px-3 py-1 rounded-lg border border-yellow-500 text-yellow-600 hover:bg-yellow-50 transition-all cursor-pointer"
                   >
-                    Edit
+                    update
                   </button>
 
                   {/* delte btn */}
@@ -185,57 +215,57 @@ const MyTransactions = () => {
           </motion.div>
         )}
 
-        {/* edit modal */}
+        {/* update modal */}
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
           <div className="modal-box bg-white shadow-xl border rounded-2xl">
             <h3 className="font-bold text-2xl text-center mb-4 text-gray-800">
               Update Transaction
             </h3>
 
-            <form onClick={editTransaction} className="space-y-4">
+            <form onSubmit={updateTransaction} className="space-y-4">
               {/* Type */}
               <div>
-              <label className="block font-semibold text-gray-700 mb-1">
-                Type
-              </label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              >
-                <option value="Income">Income</option>
-                <option value="Expense">Expense</option>
-              </select>
-            </div>
+                <label className="block font-semibold text-gray-700 mb-1">
+                  Type
+                </label>
+                <select
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  <option value="Income">Income</option>
+                  <option value="Expense">Expense</option>
+                </select>
+              </div>
 
               {/* Category */}
               <div>
-              <label className="block font-semibold text-gray-700 mb-1">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                required
-              >
-                <option value="">Select Category</option>
-                {type === "Income" ? (
-                  <>
-                    <option value="Salary">Salary</option>
-                    <option value="Business">Business</option>
-                    <option value="Investment">Investment</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="Food">Food</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Bills">Bills</option>
-                  </>
-                )}
-              </select>
-            </div>
+                <label className="block font-semibold text-gray-700 mb-1">
+                  Category
+                </label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {type === "Income" ? (
+                    <>
+                      <option value="Salary">Salary</option>
+                      <option value="Business">Business</option>
+                      <option value="Investment">Investment</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Food">Food</option>
+                      <option value="Transport">Transport</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Bills">Bills</option>
+                    </>
+                  )}
+                </select>
+              </div>
 
               {/* Amount */}
               <div>
@@ -246,6 +276,7 @@ const MyTransactions = () => {
                   type="number"
                   name="amount"
                   // defaultValue={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
                   placeholder="Enter amount"
                 />
@@ -259,6 +290,7 @@ const MyTransactions = () => {
                 <textarea
                   name="description"
                   // defaultValue={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   rows="3"
                   className="textarea textarea-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
                   placeholder="Write description"
@@ -274,6 +306,7 @@ const MyTransactions = () => {
                   type="date"
                   name="date"
                   // defaultValue={date?.slice(0, 10)}
+                  onChange={(e) => setDate(e.target.value)}
                   className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
                 />
               </div>
