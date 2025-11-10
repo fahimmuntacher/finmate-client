@@ -11,6 +11,8 @@ const MyTransactions = () => {
   const { user } = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [type, setType] = useState("Income");
+  const [category, setCategory] = useState("");
 
   // Filter & sort state
   const [filterType, setFilterType] = useState("");
@@ -56,8 +58,8 @@ const MyTransactions = () => {
                 text: "Your transaction has been deleted.",
                 icon: "success",
               });
-              const remaingingTrans = transactions.filter( t => t._id !== id);
-              setTransactions(remaingingTrans)
+              const remaingingTrans = transactions.filter((t) => t._id !== id);
+              setTransactions(remaingingTrans);
             }
           });
 
@@ -67,7 +69,12 @@ const MyTransactions = () => {
         //   icon: "success",
         // });
       }
-    })
+    });
+  };
+
+  // edit transaction
+  const editTransaction = (id) => {
+    console.log(id);
   };
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const MyTransactions = () => {
   if (loading) return <Spinner></Spinner>;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-green-100 to bg-green-50">
+    <div className="min-h-screen">
       <div className="max-w-5xl mx-auto py-10 px-4 ">
         <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">
           My Transactions
@@ -153,11 +160,15 @@ const MyTransactions = () => {
                   </Link>
 
                   {/* Edit button */}
-                  <Link to={`/my-transactions/transaction-edit/${t._id}`}>
-                    <button className="px-3 py-1 rounded-lg border border-yellow-500 text-yellow-600 hover:bg-yellow-50 transition-all cursor-pointer">
-                      Edit
-                    </button>
-                  </Link>
+
+                  <button
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                    className="px-3 py-1 rounded-lg border border-yellow-500 text-yellow-600 hover:bg-yellow-50 transition-all cursor-pointer"
+                  >
+                    Edit
+                  </button>
 
                   {/* delte btn */}
                   <button
@@ -173,6 +184,121 @@ const MyTransactions = () => {
             ))}
           </motion.div>
         )}
+
+        {/* edit modal */}
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box bg-white shadow-xl border rounded-2xl">
+            <h3 className="font-bold text-2xl text-center mb-4 text-gray-800">
+              Update Transaction
+            </h3>
+
+            <form onClick={editTransaction} className="space-y-4">
+              {/* Type */}
+              <div>
+              <label className="block font-semibold text-gray-700 mb-1">
+                Type
+              </label>
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
+              </select>
+            </div>
+
+              {/* Category */}
+              <div>
+              <label className="block font-semibold text-gray-700 mb-1">
+                Category
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                required
+              >
+                <option value="">Select Category</option>
+                {type === "Income" ? (
+                  <>
+                    <option value="Salary">Salary</option>
+                    <option value="Business">Business</option>
+                    <option value="Investment">Investment</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Bills">Bills</option>
+                  </>
+                )}
+              </select>
+            </div>
+
+              {/* Amount */}
+              <div>
+                <label className="block text-gray-600 font-medium mb-1">
+                  Amount
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  // defaultValue={amount}
+                  className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
+                  placeholder="Enter amount"
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-gray-600 font-medium mb-1">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  // defaultValue={description}
+                  rows="3"
+                  className="textarea textarea-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
+                  placeholder="Write description"
+                ></textarea>
+              </div>
+
+              {/* Date */}
+              <div>
+                <label className="block text-gray-600 font-medium mb-1">
+                  Date
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  // defaultValue={date?.slice(0, 10)}
+                  className="input input-bordered w-full bg-gray-50 focus:ring-2 focus:ring-[#00C896] text-gray-800 text-base"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("my_modal_5").close()}
+                  className="border border-[#00C896] text-[#00C896] bg-white py-2.5 px-4 rounded-xl font-medium hover:bg-green-50 transition-all duration-200"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-[#00C896] text-white font-semibold py-2.5 px-6 rounded-xl shadow hover:bg-green-700 transition-all duration-200 disabled:opacity-60"
+                >
+                  {loading ? "Updating..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
       </div>
     </div>
   );
