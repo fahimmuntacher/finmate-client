@@ -101,6 +101,8 @@ const AddTransaction = () => {
                     <option value="Salary">Salary</option>
                     <option value="Business">Business</option>
                     <option value="Investment">Investment</option>
+                    <option value="Tution">Tution</option>
+                    <option value="Others">Others</option>
                   </>
                 ) : (
                   <>
@@ -108,6 +110,7 @@ const AddTransaction = () => {
                     <option value="Transport">Transport</option>
                     <option value="Shopping">Shopping</option>
                     <option value="Bills">Bills</option>
+                    <option value="Others">Others</option>
                   </>
                 )}
               </select>

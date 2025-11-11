@@ -56,7 +56,7 @@ const PlanCard = () => {
         Choose Your Plan
       </h1>
 
-      <div className="grid md:grid-cols-3 justify-center gap-10 sm:gap-0">
+      <div className="grid gap-8 md:grid-cols-3 place-items-center">
         {plans.map((plan, index) => (
           <motion.div
             key={plan.id}
@@ -68,7 +68,7 @@ const PlanCard = () => {
               ease: "easeOut",
             }}
             
-            className={`relative w-full max-w-sm mx-auto bg-white border rounded-2xl shadow-md hover:shadow-lg  transition-all duration-300  ${
+            className={`relative w-full md:max-w-sm mx-auto bg-white border rounded-2xl shadow-md hover:shadow-lg transition-all duration-300  ${
               plan.popular ? "border-green-600 scale-105" : "border-green-300"
             }`}
           >
