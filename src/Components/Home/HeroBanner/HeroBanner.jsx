@@ -6,7 +6,7 @@ import { Link } from "react-router";
 
 const HeroBanner = () => {
   return (
-    <section className="bg-green-50 relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-8">
         {/* Text Section */}
         <motion.div
@@ -50,8 +50,8 @@ const HeroBanner = () => {
       </div>
 
       {/* background shapes */}
-      <motion.div className="absolute top-0 left-0 w-64 h-64 bg-green-300 rounded-full opacity-30 -translate-x-32 -translate-y-32" />
-      <motion.div className="absolute bottom-0 right-0 w-80 h-80 bg-green-300 rounded-full opacity-20 translate-x-32 translate-y-32" />
+      <motion.div className="hidden sm:block absolute top-0 left-0 w-64 h-64 bg-green-300 rounded-full opacity-30 -translate-x-32 -translate-y-32" />
+      <motion.div className="hidden sm:block absolute bottom-0 right-0 w-80 h-80 bg-green-300 rounded-full opacity-20 translate-x-32 translate-y-32" />
     </section>
   );
 };

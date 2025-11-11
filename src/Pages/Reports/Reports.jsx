@@ -52,7 +52,7 @@ const Reports = () => {
       setSummary({ income, expense, balance: Math.max(0, income - expense) });
     });
     setLoading(false);
-  }, [user, selectedMonth]);
+  }, [user, selectedMonth, axiosInstance]);
 
   // Pie chart data (Category-wise Expense)
   const categoryData = Object.values(

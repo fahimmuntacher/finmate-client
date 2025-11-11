@@ -68,8 +68,9 @@ const MyProfile = () => {
             <input
               type="text"
               value={name}
+              disabled
               readOnly
-              className="w-full border border-green-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full cursor-not-allowed border border-green-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -79,7 +80,8 @@ const MyProfile = () => {
               type="text"
               value={photo}
               readOnly
-              className="w-full border border-green-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              disabled
+              className="w-full border cursor-not-allowed border-green-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
