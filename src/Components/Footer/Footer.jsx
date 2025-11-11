@@ -14,7 +14,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white border-t border-gray-200 relative">
+    <footer className="bg-green-50 border-t border-gray-200 relative overflow-hidden">
       {/* Top bar icon for scrolling */}
       <div
         onClick={scrollToTop}
@@ -98,9 +98,17 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 text-gray-500 text-center py-4 border-t border-gray-200">
+      <div className=" text-gray-500 text-center py-4 border-t border-gray-200">
         &copy; {new Date().getFullYear()} Finmate. All rights reserved.
       </div>
+
+      <div
+        className="absolute top-0 left-0 w-64 h-64 bg-green-300 rounded-full opacity-30 -translate-x-32 -translate-y-32"
+      />
+      <div
+        className="absolute bottom-0 right-0 w-80 h-80 bg-green-300 rounded-full opacity-20 translate-x-32 translate-y-32"
+        
+      />
     </footer>
   );
 };

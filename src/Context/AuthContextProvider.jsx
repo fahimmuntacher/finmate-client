@@ -19,13 +19,15 @@ const AuthContextProvider = ({ children }) => {
   //   create new user
   const createUser = (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password)
+    .finally(setLoading(false));
   };
 
   //   sign in user
   const signInUser = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
+    .finally(setLoading(false))
   };
 
   //   sign in with google

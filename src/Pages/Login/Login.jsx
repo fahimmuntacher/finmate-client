@@ -5,10 +5,12 @@ import { AuthContext } from "../../Context/AuthContext";
 import logo from "../../assets/logo.svg";
 import { toast } from "react-toastify";
 import {  useLocation, useNavigate } from "react-router";
+import { tr } from "motion/react-client";
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/my-profile";
@@ -20,14 +22,27 @@ const Login = () => {
 
     signInUser(email, password)
       .then((res) => {
-        navigate(from, { replace: true });
+        navigate(from, { replace: true })
         toast.success("Login Successful!");
-        
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Invalid email or password");
-      });
+         if (err.code === "auth/invalid-email") {
+          toast.error("Invalid email address!");
+        } else if (err.code === "auth/user-disabled") {
+          toast.error("This account has been disabled!");
+        } else if (err.code === "auth/user-not-found") {
+          toast.error("No account found with this email!");
+        } else if (err.code === "auth/wrong-password") {
+          toast.error("Incorrect password!");
+        } else if (err.code === "auth/invalid-credential") {
+          toast.error("Invalid email or password!");
+        } else if (err.code === "auth/network-request-failed") {
+          toast.error("Network error! Please check your internet connection.");
+        } else {
+          toast.error("Something went wrong! Try again later.");
+        }
+      })   
+      ;
   };
 
   const handleGoogleSignIn = () => {

@@ -4,17 +4,18 @@ import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import {  useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+
 
 const Register = () => {
-  const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, updateUserProfile, signInWithGoogle } =
+    useContext(AuthContext);
+  const [passErr, setPassErr] = useState("");
+  
   const [show, setShow] = useState(false);
-  const [ onChangePass, setOnChangePass] = useState("");
-  const [passErr, setPassErr] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/my-profile";
-   
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -22,18 +23,30 @@ const Register = () => {
     const photoURL = e.target.photoURL.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    if (password.length < 6) {
-    setPassErr('Password must be at least 6 characters long.');
 
-  }
+    // Password validation
+    if (password.length < 6) {
+      setPassErr("Password must be at least 6 characters long.");
+      return;
+    } else if (!/[A-Z]/.test(password)) {
+      setPassErr("Password must contain at least one uppercase letter.");
+      return;
+    } else if (!/[a-z]/.test(password)) {
+      setPassErr("Password must contain at least one lowercase letter.");
+      return;
+    } else {
+      setPassErr("");
+    }
+
     createUser(email, password)
       .then((res) => {
+        setLoading(true)
         console.log(res);
         updateUserProfile(name, photoURL)
           .then((res) => {
             console.log(res);
             navigate(from, { replace: true });
-            toast.success("Account Created Successfully")
+            toast.success("Account Created Successfully");
           })
           .catch((err) => {
             console.log(err);
@@ -41,22 +54,36 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+        if (err.code === "auth/email-already-in-use") {
+          toast.warning("User already exists! Try logging in.");
+          return
+        } else if (err.code === "auth/invalid-email") {
+          toast.error("Invalid email format!");
+        } else if (err.code === "auth/weak-password") {
+          toast.error("Password is too weak! Use a stronger one.");
+        } else if (err.code === "auth/missing-password") {
+          toast.error("Please enter your password!");
+        } else if (err.code === "auth/network-request-failed") {
+          toast.error("Network error! Check your internet connection.");
+        } else {
+          toast.error("Something went wrong! Please try again later.");
+        }
+      })
   };
 
   const googleSignIn = () => {
     signInWithGoogle()
-    .then(res => {
+      .then((res) => {
         console.log(res);
         toast.success("Log in Successfully!", {
-          position: "bottom-right"
-        })
-        navigate('/my-profile');
-    })
-    .catch(err => {
+          position: "bottom-right",
+        });
+        navigate("/my-profile");
+      })
+      .catch((err) => {
         console.log(err);
-    })
-  }
+      });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#E6FFF5] to-white px-4">
@@ -150,12 +177,11 @@ const Register = () => {
             <input
               type={show ? "text" : "password"}
               name="password"
-              onChange={(e) =>setOnChangePass(e.target.value)}
               required
               placeholder="Enter your password"
               className="w-full border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#00C896]"
             />
-            <p className="font-semibold text-lg text-red-500">{passErr}</p>
+
             {/* Eye Icon */}
             <div
               className="absolute right-3 top-7/12 text-black cursor-pointer"
@@ -163,7 +189,9 @@ const Register = () => {
             >
               {show ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
             </div>
+           
           </div>
+           {passErr && <p className="font-semibold text-red-500">{passErr}</p>}
 
           <motion.button
             whileHover={{ scale: 1.05 }}
