@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import useAxios from "../../../Hooks/useAxios";
 import CountUp from "react-countup";
 import { AuthContext } from "../../../Context/AuthContext";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Statistics = () => {
-  const axiosInstance = useAxios();
+  // const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure()
   const {user} = useContext(AuthContext)
   const [summary, setSummary] = useState({ income: 0, expense: 0, total: 0 });
 
   useEffect(() => {
-    axiosInstance.get(`/transactions?email=${user.email}`).then((res) => {
+    axiosSecure.get(`/transactions?email=${user.email}`).then((res) => {
       const data = res.data;
       const income = data
         .filter((t) => t.type === "Income")
@@ -19,7 +21,7 @@ const Statistics = () => {
         .reduce((acc, curr) => acc + Number(curr.amount), 0);
       setSummary({ income, expense, total: Math.max(income - expense, 0) });
     });
-  }, [axiosInstance, user]);
+  }, [axiosSecure, user]);
   console.log(summary);
   return (
     <div className="max-w-7xl mx-auto px-4">

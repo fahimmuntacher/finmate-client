@@ -1,23 +1,25 @@
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Spinner from "../../Components/Spinner/Spinner";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
-import useAxios from "../../Hooks/useAxios";
+// import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const accent = "#00C896";
 
 const TransactionDetail = () => {
   const { id } = useParams();
-  const axiosInstance = useAxios()
+  // const axiosInstance = useAxios()
+  const axiosSecure = useAxiosSecure()
   const navigate = useNavigate();
   const [transaction, setTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    axiosInstance
+    axiosSecure
       .get(`/transactions/${id}`)
       .then((res) => {
         setTransaction(res.data);

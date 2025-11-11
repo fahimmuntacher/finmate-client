@@ -3,18 +3,19 @@ import { AuthContext } from "../../Context/AuthContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import transactionIllustration from "../../assets/trasaction.jpg";
-import axios from "axios";
+
 import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AddTransaction = () => {
   const { user } = useContext(AuthContext);
-
+  const axiosSecure = useAxiosSecure()
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState();
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  const axiosInstance = useAxios()
+  // const axiosInstance = useAxios()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ const AddTransaction = () => {
     //       toast.success("Transaction Added Successfully!");
     //     }
     //   });
-    axiosInstance.post("/transactions", newTransaction)
+    axiosSecure.post("/transactions", newTransaction)
     .then(data => {
       console.log(data.data);
       if(data.data.insertedId){

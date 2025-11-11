@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 
-import axios from "axios";
 import {
   PieChart,
   Pie,
@@ -16,13 +15,15 @@ import {
 } from "recharts";
 import { AuthContext } from "../../Context/AuthContext";
 import Spinner from "../../Components/Spinner/Spinner";
-import useAxios from "../../Hooks/useAxios";
+// import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const COLORS = ["#00C896", "#FF6B6B", "#FFD93D", "#6C63FF"];
 
 const Reports = () => {
   const { user } = useContext(AuthContext);
-  const axiosInstance = useAxios();
+  // const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure()
   const [transactions, setTransactions] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [summary, setSummary] = useState({ income: 0, expense: 0, balance: 0 });
@@ -32,7 +33,7 @@ const Reports = () => {
   useEffect(() => {
     if (!user?.email) return;
     setLoading(true);
-    axiosInstance.get(`/transactions?email=${user.email}`).then((res) => {
+    axiosSecure.get(`/transactions?email=${user.email}`).then((res) => {
       const data = res.data;
       if (selectedMonth) {
         const filtered = data.filter(
@@ -52,7 +53,7 @@ const Reports = () => {
       setSummary({ income, expense, balance: Math.max(0, income - expense) });
     });
     setLoading(false);
-  }, [user, selectedMonth, axiosInstance]);
+  }, [user, selectedMonth, axiosSecure]);
 
   // Pie chart data (Category-wise Expense)
   const categoryData = Object.values(
