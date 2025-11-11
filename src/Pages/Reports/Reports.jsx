@@ -135,7 +135,7 @@ const Reports = () => {
         {/* Pie Chart */}
         <div className="bg-white border rounded-2xl p-6 shadow">
           <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
-            Expense Breakdown by Category
+            Income & Expense Breakdown by Category
           </h3>
           {categoryData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>

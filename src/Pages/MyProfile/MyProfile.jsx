@@ -23,7 +23,6 @@ const MyProfile = () => {
       setName(displayName);
       setPhoto(photoURL);
       toast.success("Profile updated successfully!");
-      document.getElementById("my_modal_5").close(); // close modal
     } catch (error) {
       console.log(error);
       toast.error("Failed to update profile");
