@@ -1,4 +1,4 @@
-import  { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import axios from "axios";
 import {
@@ -16,11 +16,13 @@ import {
 } from "recharts";
 import { AuthContext } from "../../Context/AuthContext";
 import Spinner from "../../Components/Spinner/Spinner";
+import useAxios from "../../Hooks/useAxios";
 
 const COLORS = ["#00C896", "#FF6B6B", "#FFD93D", "#6C63FF"];
 
 const Reports = () => {
   const { user } = useContext(AuthContext);
+  const axiosInstance = useAxios();
   const [transactions, setTransactions] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [summary, setSummary] = useState({ income: 0, expense: 0, balance: 0 });
@@ -30,40 +32,36 @@ const Reports = () => {
   useEffect(() => {
     if (!user?.email) return;
     setLoading(true);
-    axios
-      .get(`http://localhost:3000/transactions?email=${user.email}`)
-      .then((res) => {
-        const data = res.data;
-        if (selectedMonth) {
-          const filtered = data.filter(
-            (t) => new Date(t.date).getMonth() + 1 === parseInt(selectedMonth)
-          );
-          setTransactions(filtered);
-        } else {
-          setTransactions(data);
-        }
+    axiosInstance.get(`/transactions?email=${user.email}`).then((res) => {
+      const data = res.data;
+      if (selectedMonth) {
+        const filtered = data.filter(
+          (t) => new Date(t.date).getMonth() + 1 === parseInt(selectedMonth)
+        );
+        setTransactions(filtered);
+      } else {
+        setTransactions(data);
+      }
 
-        const income = data
-          .filter((t) => t.type === "Income")
-          .reduce((acc, cur) => acc + Number(cur.amount), 0);
-        const expense = data
-          .filter((t) => t.type === "Expense")
-          .reduce((acc, cur) => acc + Number(cur.amount), 0);
-        setSummary({ income, expense, balance: Math.max(0, income - expense) });
-      });
-      setLoading(false)
+      const income = data
+        .filter((t) => t.type === "Income")
+        .reduce((acc, cur) => acc + Number(cur.amount), 0);
+      const expense = data
+        .filter((t) => t.type === "Expense")
+        .reduce((acc, cur) => acc + Number(cur.amount), 0);
+      setSummary({ income, expense, balance: Math.max(0, income - expense) });
+    });
+    setLoading(false);
   }, [user, selectedMonth]);
 
   // Pie chart data (Category-wise Expense)
   const categoryData = Object.values(
-    transactions
-      .reduce((acc, t) => {
-        acc[t.category] = acc[t.category] || { name: t.category, value: 0 };
-        acc[t.category].value += Number(t.amount);
-        return acc;
-      }, {})
+    transactions.reduce((acc, t) => {
+      acc[t.category] = acc[t.category] || { name: t.category, value: 0 };
+      acc[t.category].value += Number(t.amount);
+      return acc;
+    }, {})
   );
-
 
   // Monthly totals (for bar chart)
   const monthlyTotals = Array.from({ length: 12 }, (_, i) => {
@@ -83,8 +81,8 @@ const Reports = () => {
     };
   });
 
-  if(loading){
-    return <Spinner></Spinner>
+  if (loading) {
+    return <Spinner></Spinner>;
   }
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">

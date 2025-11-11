@@ -4,15 +4,17 @@ import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { Navigate, useLocation, useNavigate } from "react-router";
+import {  useLocation, useNavigate } from "react-router";
 
 const Register = () => {
   const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [ onChangePass, setOnChangePass] = useState("");
+  const [passErr, setPassErr] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/my-profile";
- 
+   
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -20,6 +22,10 @@ const Register = () => {
     const photoURL = e.target.photoURL.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+    if (password.length < 6) {
+    setPassErr('Password must be at least 6 characters long.');
+
+  }
     createUser(email, password)
       .then((res) => {
         console.log(res);
@@ -144,10 +150,12 @@ const Register = () => {
             <input
               type={show ? "text" : "password"}
               name="password"
+              onChange={(e) =>setOnChangePass(e.target.value)}
               required
               placeholder="Enter your password"
               className="w-full border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#00C896]"
             />
+            <p className="font-semibold text-lg text-red-500">{passErr}</p>
             {/* Eye Icon */}
             <div
               className="absolute right-3 top-7/12 text-black cursor-pointer"

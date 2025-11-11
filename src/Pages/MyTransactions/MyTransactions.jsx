@@ -1,16 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 import Spinner from "../../Components/Spinner/Spinner";
 import { motion } from "framer-motion";
-import { data, Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import NoTransaction from "./NoTransaction";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
+import useAxios from "../../Hooks/useAxios";
 
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
+  const axiosInstance = useAxios()
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("Income");
@@ -35,8 +37,8 @@ const MyTransactions = () => {
     if (filterType) query.append("type", filterType);
     if (sortOrder) query.append("sortByDate", sortOrder);
 
-    axios
-      .get(`http://localhost:3000/transactions?email=${user.email}&${query}`)
+    axiosInstance
+      .get(`/transactions?email=${user.email}&${query}`)
       .then((res) => {
         setTransactions(res.data);
         setLoading(false);
@@ -59,8 +61,8 @@ const MyTransactions = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:3000/transactions/${id}`)
+        axiosInstance
+          .delete(`/transactions/${id}`)
           .then((data) => {
             if (data.data.deletedCount) {
               Swal.fire({
@@ -85,7 +87,7 @@ const MyTransactions = () => {
   // specific transaction
 
   const specificTransaction = (id) => {
-    axios.get(`http://localhost:3000/transactions/${id}`).then((data) => {
+    axiosInstance.get(`/transactions/${id}`).then((data) => {
       setDefault(data.data);
       console.log(deafult);
     });
@@ -104,8 +106,8 @@ const MyTransactions = () => {
     };
     console.log(updateTrans);
 
-    axios
-      .put(`http://localhost:3000/transactions/${updateId}`, updateTrans)
+   axiosInstance
+      .put(`/transactions/${updateId}`, updateTrans)
       .then((data) => {
         console.log("data after update", data);
         fetchTransactions();
@@ -226,9 +228,9 @@ const MyTransactions = () => {
         )}
 
         {/* update modal */}
-        
+
         <UpdateModal
-        modalId="my_modal_5"
+          modalId="my_modal_5"
           deafult={deafult}
           updateTransaction={updateTransaction}
           type={type}

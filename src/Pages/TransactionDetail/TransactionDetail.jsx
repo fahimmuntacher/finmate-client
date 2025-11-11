@@ -4,19 +4,21 @@ import { useParams, useNavigate } from "react-router";
 import Spinner from "../../Components/Spinner/Spinner";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
+import useAxios from "../../Hooks/useAxios";
 
 const accent = "#00C896";
 
 const TransactionDetail = () => {
   const { id } = useParams();
+  const axiosInstance = useAxios()
   const navigate = useNavigate();
   const [transaction, setTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3000/transactions/${id}`)
+    axiosInstance
+      .get(`/transactions/${id}`)
       .then((res) => {
         setTransaction(res.data);
         setLoading(false);

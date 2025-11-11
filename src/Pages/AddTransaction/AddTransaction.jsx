@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import transactionIllustration from "../../assets/trasaction.jpg";
 import axios from "axios";
+import useAxios from "../../Hooks/useAxios";
 
 const AddTransaction = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,7 @@ const AddTransaction = () => {
   const [amount, setAmount] = useState();
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const axiosInstance = useAxios()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,14 +28,21 @@ const AddTransaction = () => {
     const userName = e.target.userName.value;
     const createdAt = new Date();
     const newTransaction = { type, category, amount, description, date, userEmail, userName, createdAt};
-    axios
-      .post("http://localhost:3000/transactions", newTransaction)
-      .then((data) => {
-        console.log(data.data);
-        if (data.data.insertedId) {
-          toast.success("Transaction Added Successfully!");
-        }
-      });
+    // axios
+    //   .post("http://localhost:3000/transactions", newTransaction)
+    //   .then((data) => {
+    //     console.log(data.data);
+    //     if (data.data.insertedId) {
+    //       toast.success("Transaction Added Successfully!");
+    //     }
+    //   });
+    axiosInstance.post("/transactions", newTransaction)
+    .then(data => {
+      console.log(data.data);
+      if(data.data.insertedId){
+        toast.success("Transaction Added Successfully!");
+      }
+    })
   };
 
   return (
