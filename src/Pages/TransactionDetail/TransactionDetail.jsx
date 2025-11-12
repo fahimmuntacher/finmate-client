@@ -26,7 +26,7 @@ const TransactionDetail = () => {
         console.error(err);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, axiosSecure]);
 
   if (loading) {
     return (

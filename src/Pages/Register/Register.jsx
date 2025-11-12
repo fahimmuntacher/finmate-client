@@ -4,15 +4,18 @@ import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import Spinner from "../../Components/Spinner/Spinner";
+
 
 const Register = () => {
-  const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, updateUserProfile, signInWithGoogle, loading } = useContext(AuthContext);
   const [passErr, setPassErr] = useState("");
+  
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/my-profile";
+
+  
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -38,7 +41,7 @@ const Register = () => {
       .then(() => {
         updateUserProfile(name, photoURL)
           .then(() => {
-            navigate(from, { replace: true });
+            navigate("/my-profile");
             toast.success("Account Created Successfully");
           })
           .catch(() => {});
@@ -68,6 +71,10 @@ const Register = () => {
       })
       .catch(() => {});
   };
+
+  if(loading){
+    return <Spinner></Spinner>
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#E6FFF5] to-white dark:from-neutral-900 dark:to-neutral-800 px-4">

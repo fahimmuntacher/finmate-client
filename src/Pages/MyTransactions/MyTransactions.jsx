@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { AuthContext } from "../../Context/AuthContext";
-
 import Spinner from "../../Components/Spinner/Spinner";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router";
@@ -10,21 +9,19 @@ import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-// import useAxios from "../../Hooks/useAxios";
-
 const MyTransactions = () => {
   const { user } = useContext(AuthContext);
-  // const axiosInstance = useAxios()
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
   const [updateId, setUpdateId] = useState(null);
   const [deafult, setDefault] = useState(null);
-  const navigate = useNavigate();
 
-  // updated data
+  // Updated data
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -33,9 +30,11 @@ const MyTransactions = () => {
   const [filterType, setFilterType] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  // Fetch transactions
-  const fetchTransactions = () => {
+  
+  const fetchTransactions = useCallback(() => {
+    if (!user?.email) return;
     setLoading(true);
+
     const query = new URLSearchParams();
     if (filterType) query.append("type", filterType);
     if (sortOrder) query.append("sortByDate", sortOrder);
@@ -50,7 +49,7 @@ const MyTransactions = () => {
         console.error(err);
         setLoading(false);
       });
-  };
+  }, [user?.email, filterType, sortOrder, axiosSecure]);
 
   // Delete Transaction
   const deleteTransaction = (id) => {
@@ -64,34 +63,28 @@ const MyTransactions = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure
-          .delete(`/transactions/${id}`)
-          .then((data) => {
-            if (data.data.deletedCount) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your transaction has been deleted.",
-                icon: "success",
-              });
-              const remaingingTrans = transactions.filter((t) => t._id !== id);
-              setTransactions(remaingingTrans);
-            }
-          });
-
+        axiosSecure.delete(`/transactions/${id}`).then((data) => {
+          if (data.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your transaction has been deleted.",
+              icon: "success",
+            });
+            setTransactions((prev) => prev.filter((t) => t._id !== id));
+          }
+        });
       }
     });
   };
 
-  // specific transaction
-
+  // Fetch specific transaction for modal
   const specificTransaction = (id) => {
     axiosSecure.get(`/transactions/${id}`).then((data) => {
       setDefault(data.data);
-      // console.log(deafult);
     });
   };
 
-  // edit transaction
+  // Update transaction
   const updateTransaction = (e) => {
     e.preventDefault();
     const updateTrans = {
@@ -102,28 +95,24 @@ const MyTransactions = () => {
       date,
       createdAt: new Date(),
     };
-    // console.log(updateTrans);
 
-   axiosSecure
-      .put(`/transactions/${updateId}`, updateTrans)
-      .then((data) => {
-        // console.log("data after update", data);
-        fetchTransactions();
-        document.getElementById("my_modal_5").close();
-        toast.success("Updated Transaction successfully!");
-        navigate(`/my-transactions/transaction/${updateId}`);
-      });
+    axiosSecure.put(`/transactions/${updateId}`, updateTrans).then(() => {
+      fetchTransactions();
+      document.getElementById("my_modal_5").close();
+      toast.success("Updated Transaction successfully!");
+      navigate(`/my-transactions/transaction/${updateId}`);
+    });
   };
 
+  
   useEffect(() => {
-    if (user?.email) fetchTransactions();
-  }, [user, filterType, sortOrder]);
+    fetchTransactions();
+  }, [fetchTransactions]);
 
-  if (loading) return <Spinner></Spinner>;
+  if (loading) return <Spinner />;
 
   return (
     <div className="min-h-screen dark:bg-neutral-800">
-      
       <title>My Transactions | Finmate</title>
       <div className="max-w-5xl mx-auto py-10 px-4 ">
         <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-6 text-center">
@@ -162,7 +151,7 @@ const MyTransactions = () => {
 
         {/* Transactions List */}
         {transactions.length === 0 ? (
-          <NoTransaction></NoTransaction>
+          <NoTransaction />
         ) : (
           <motion.div
             className="grid gap-6"
@@ -183,7 +172,9 @@ const MyTransactions = () => {
                   <p className="font-semibold text-gray-700 dark:text-gray-200">{t.description}</p>
                   <p
                     className={`font-bold ${
-                      t.type === "Income" ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400"
+                      t.type === "Income"
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-500 dark:text-red-400"
                     }`}
                   >
                     {t.type === "Income" ? "+" : "-"}${t.amount}
@@ -192,14 +183,11 @@ const MyTransactions = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
-                  {/* view detail */}
                   <Link to={`/my-transactions/transaction/${t._id}`}>
                     <button className="px-3 py-1 rounded-lg border border-green-500 dark:border-green-400 text-green-600 dark:text-green-400 cursor-pointer hover:bg-green-50 dark:hover:bg-green-900 transition-all">
                       View
                     </button>
                   </Link>
-
-                  {/* update button */}
 
                   <button
                     onClick={() => {
@@ -209,14 +197,11 @@ const MyTransactions = () => {
                     }}
                     className="px-3 py-1 rounded-lg border border-yellow-500 dark:border-yellow-400 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900 transition-all cursor-pointer"
                   >
-                    update
+                    Update
                   </button>
 
-                  {/* delte btn */}
                   <button
-                    onClick={() => {
-                      deleteTransaction(t._id);
-                    }}
+                    onClick={() => deleteTransaction(t._id)}
                     className="px-3 py-1 rounded-lg border border-red-500 dark:border-red-400 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 transition-all cursor-pointer"
                   >
                     Delete
@@ -227,8 +212,7 @@ const MyTransactions = () => {
           </motion.div>
         )}
 
-        {/* update modal */}
-
+        {/* Update Modal */}
         <UpdateModal
           modalId="my_modal_5"
           deafult={deafult}
@@ -244,7 +228,7 @@ const MyTransactions = () => {
           date={date}
           setDate={setDate}
           loading={loading}
-        ></UpdateModal>
+        />
       </div>
     </div>
   );

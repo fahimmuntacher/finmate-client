@@ -8,6 +8,7 @@ import ThemeController from "./ThemeController";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
+  const name = user?.displayName ? user.displayName.split(" ")[0] : "User";
 
   const links = (
     <>
@@ -86,7 +87,7 @@ const Navbar = () => {
             <span className="text-gray-700 dark:text-gray-200 font-medium flex items-center gap-2.5">
               Hi,{" "}
               <span className="text-green-600 dark:text-green-400 font-bold">
-                {user.displayName.split(" ")[0] || "User"}
+                {name || "User"}
               </span>
               <Link to="/my-profile">
                 <img

@@ -1,17 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import Spinner from "../../Components/Spinner/Spinner";
 import { Helmet } from "react-helmet";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const MyProfile = () => {
   const { user, updateUserProfile, signOutUser } = useContext(AuthContext);
-  const [name, setName] = useState(user?.displayName || "");
-  const [photo, setPhoto] = useState(user?.photoURL || "");
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // ✅ FIX: sync state when user changes (Firebase loads user after mount)
+  useEffect(() => {
+    if (user) {
+      setName(user.displayName || "");
+      setPhoto(user.photoURL || "");
+    }
+  }, [user]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -28,6 +36,7 @@ const MyProfile = () => {
       toast.error("Failed to update profile");
     } finally {
       setLoading(false);
+      document.getElementById("my_modal_5").close();
     }
   };
 
@@ -39,8 +48,12 @@ const MyProfile = () => {
     } catch (err) {}
   };
 
-  if (loading) {
-    return <Spinner />;
+  if(loading){
+    return <Spinner></Spinner>
+  }
+
+  if (!user) {
+    return <Spinner></Spinner>;
   }
 
   return (
@@ -59,7 +72,9 @@ const MyProfile = () => {
       </Helmet>
 
       <div className="bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 w-full max-w-md text-center border border-green-100 dark:border-gray-700">
-        <h1 className="text-3xl font-bold text-green-500 dark:text-green-400 mb-4">{name}</h1>
+        <h1 className="text-3xl font-bold text-green-500 dark:text-green-400 mb-4">
+          {name || "User"}
+        </h1>
 
         <img
           src={
@@ -80,7 +95,7 @@ const MyProfile = () => {
               value={name}
               disabled
               readOnly
-              className="w-full cursor-not-allowed border border-green-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-800 dark:text-gray-200"
+              className="w-full cursor-not-allowed border border-green-300 dark:border-gray-700 rounded-lg px-3 py-2 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
 
@@ -93,7 +108,7 @@ const MyProfile = () => {
               value={photo}
               readOnly
               disabled
-              className="w-full border cursor-not-allowed border-green-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-800 dark:text-gray-200"
+              className="w-full border cursor-not-allowed border-green-300 dark:border-gray-700 rounded-lg px-3 py-2 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
 
@@ -161,7 +176,9 @@ const MyProfile = () => {
               <div className="flex justify-end gap-2 pt-4">
                 <button
                   type="button"
-                  onClick={() => document.getElementById("my_modal_5").close()}
+                  onClick={() =>
+                    document.getElementById("my_modal_5").close()
+                  }
                   className="border-2 border-green-400 text-lg text-green-600 dark:text-green-400 bg-gray-50 dark:bg-gray-800 py-2.5 px-3.5 rounded-xl cursor-pointer"
                 >
                   Cancel
