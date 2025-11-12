@@ -24,7 +24,9 @@ We believe everyone deserves financial clarity. That’s why FinMate is intuitiv
 
 - **React** – Frontend library for building interactive UI  
 - **Tailwind CSS** – Utility-first CSS framework for styling  
-- **Firebase** – Backend services including authentication and database  
+- **Node.js & Express.js** – Backend server and API development  
+- **MongoDB** – Database for storing user and financial data  
+- **Firebase** – Authentication and additional backend services  
 - **JWT Authentication** – Secure user login and sessions  
 - **Framer Motion** – Smooth animations and transitions  
 
@@ -32,13 +34,10 @@ We believe everyone deserves financial clarity. That’s why FinMate is intuitiv
 
 ## Demo
 
-Check out FinMate live: [https://finmatee.netlify.app/](#)  
+Check out FinMate live: [https://finmatee.netlify.app/](https://finmatee.netlify.app/)  
 
 ### Screenshots
 
-![FinMate Dashboard](![alt text](image.png))  
-
+![FinMate Dashboard](image.png)
 
 ---
-
-
