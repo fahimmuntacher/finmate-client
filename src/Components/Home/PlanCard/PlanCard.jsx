@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-
 const PlanCard = () => {
   const plans = [
     {
@@ -43,8 +42,8 @@ const PlanCard = () => {
         "Export reports as PDF/Excel",
         "Monthly category breakdown",
         "Priority support & updates",
-        "Multi-user family accounts", "AI financial advisor"
-        
+        "Multi-user family accounts",
+        "AI financial advisor",
       ],
       disabled: [],
     },
@@ -64,12 +63,13 @@ const PlanCard = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{
               duration: 0.5,
-              delay: index * 0.2, 
+              delay: index * 0.2,
               ease: "easeOut",
             }}
-            
-            className={`relative w-full md:max-w-sm mx-auto bg-white border rounded-2xl shadow-md hover:shadow-lg transition-all duration-300  ${
-              plan.popular ? "border-green-600 scale-105" : "border-green-300"
+            className={`relative w-full md:max-w-sm mx-auto bg-white dark:bg-gray-900 border rounded-2xl shadow-md hover:shadow-lg transition-all duration-300  ${
+              plan.popular
+                ? "border-green-600 scale-105"
+                : "border-green-300 dark:border-green-500"
             }`}
           >
             <div className="p-8">
@@ -82,16 +82,16 @@ const PlanCard = () => {
 
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-3xl font-bold text-gray-800">
+                <h2 className="text-4xl font-bold text-gray-500 dark:text-gray-400 block mt-1">
                   {plan.name}
                 </h2>
-                <span className="text-2xl font-semibold text-green-700">
+                <span className="text-2xl font-semibold text-green-700 dark:text-green-400">
                   {plan.price}
                 </span>
               </div>
 
               {/* Features */}
-              <ul className="space-y-3 text-gray-700 text-sm">
+              <ul className="space-y-3 text-gray-700 dark:text-gray-300 text-sm">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-center">
                     <svg
@@ -140,11 +140,9 @@ const PlanCard = () => {
               {/* Button */}
               <div className="mt-8">
                 <button
-                  className={`w-full font-semibold py-3 rounded-xl transition-all duration-200 cursor-pointer ${
-                    plan.popular
-                      ? "bg-green-600 text-white hover:bg-green-700"
-                      : "bg-green-100 text-green-700 hover:bg-green-200"
-                  }`}
+                  className={`w-full font-semibold py-3 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 ${
+    plan.popular ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-100 text-green-700 hover:bg-green-200"
+  }`}
                 >
                   {plan.popular ? "Get Started" : "Choose Plan"}
                 </button>

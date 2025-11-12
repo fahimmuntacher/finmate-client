@@ -1,16 +1,44 @@
-# React + Vite
+# FinMate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**FinMate** is your trusted financial companion, designed to help you take control of your money. Track income, expenses, and savings effortlessly, so you can focus on what truly matters: growing your future.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### Smart Insights
+Visualize your spending patterns with detailed charts and financial reports.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Simplified Saving
+Set financial goals and track your progress — FinMate keeps your finances on the right track.
 
-## Expanding the ESLint configuration
+### Built for Everyone
+Whether you're a student, freelancer, or business owner, FinMate adapts to your lifestyle.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Our Mission
+We believe everyone deserves financial clarity. That’s why FinMate is intuitive, fast, and insightful, helping users track every expense, stay organized, and reach their financial goals with confidence.
+
+---
+
+## Technologies Used
+
+- **React** – Frontend library for building interactive UI  
+- **Tailwind CSS** – Utility-first CSS framework for styling  
+- **Firebase** – Backend services including authentication and database  
+- **JWT Authentication** – Secure user login and sessions  
+- **Framer Motion** – Smooth animations and transitions  
+
+---
+
+## Demo
+
+Check out FinMate live: [https://finmatee.netlify.app/](#)  
+
+### Screenshots
+
+![FinMate Dashboard](![alt text](image.png))  
+
+
+---
+
+

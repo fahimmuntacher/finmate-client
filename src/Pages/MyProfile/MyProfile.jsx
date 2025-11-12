@@ -45,7 +45,7 @@ const MyProfile = () => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-green-100 via-white to-green-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6"
+      className="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-green-100 via-white to-green-200 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
