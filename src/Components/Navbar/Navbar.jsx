@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import "./navbar.css";
 import { CiLogin } from "react-icons/ci";
 import logo from "../../assets/logo.svg";
+import ThemeController from "./ThemeController";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
@@ -80,6 +81,7 @@ const Navbar = () => {
 
         {/* Right */}
         <div className="navbar-end flex gap-2.5">
+          <ThemeController></ThemeController>
           {user ? (
             <span className="text-gray-700 font-medium flex items-center gap-2.5">
               Hi,{" "}

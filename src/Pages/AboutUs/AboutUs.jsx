@@ -5,6 +5,7 @@ import { FaChartPie, FaPiggyBank, FaUsers } from "react-icons/fa";
 const AboutUs = () => {
   return (
     <div className="min-h-screen  text-gray-800">
+      <title>About Us | Finmate</title>
       <div className="max-w-5xl mx-auto px-6 py-16">
         {/* Header */}
         <motion.h1

@@ -64,6 +64,7 @@ const Login = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 md:p-10 text-center border border-gray-100"
       >
+        <title>Login Now | Finmate</title>
         {/* Logo */}
         <motion.img
           src={logo}

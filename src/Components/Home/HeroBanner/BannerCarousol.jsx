@@ -62,7 +62,7 @@ const BannerCarousel = ({ bannerData }) => {
                 boxShadow: isActive
                   ? "0 25px 40px rgba(0,0,0,0.15)"
                   : "0 10px 20px rgba(0,0,0,0.08)",
-                borderRadius: "1.5rem",
+                // borderRadius: "1.5rem",
               }}
             >
               {/* Left Section */}

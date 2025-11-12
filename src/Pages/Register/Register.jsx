@@ -87,6 +87,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#E6FFF5] to-white px-4">
+      <title>Register Now | Finmate</title>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

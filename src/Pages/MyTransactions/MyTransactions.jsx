@@ -9,6 +9,7 @@ import NoTransaction from "./NoTransaction";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 // import useAxios from "../../Hooks/useAxios";
 
 const MyTransactions = () => {
@@ -127,6 +128,8 @@ const MyTransactions = () => {
 
   return (
     <div className="min-h-screen">
+      
+      <title>My Transactions | Finmate</title>
       <div className="max-w-5xl mx-auto py-10 px-4 ">
         <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">
           My Transactions

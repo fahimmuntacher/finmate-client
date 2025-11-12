@@ -86,7 +86,8 @@ const Reports = () => {
     return <Spinner></Spinner>;
   }
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="max-w-7xl mx-auto py-10 px-4">
+      <title>Reports | Finmate</title>
       <h1 className="text-3xl font-bold text-green-600 mb-8 text-center">
         Financial Reports
       </h1>

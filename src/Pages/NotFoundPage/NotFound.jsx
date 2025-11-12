@@ -5,13 +5,9 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 
-
 const NotFound = () => {
   return (
-    <div className="flex flex-col justify-between min-h-screen">
-      <Navbar></Navbar>
-      <div className="flex-1">
-        <div className="flex flex-col justify-center items-center min-h-screen bg-linear-to-b from-green-50 to-white text-center px-6">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-linear-to-b from-green-50 to-white text-center px-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -37,10 +33,7 @@ const NotFound = () => {
         </Link>
       </motion.div>
     </div>
-      </div>
-      <Footer></Footer>
-    </div>
-  )
+  );
 };
 
 export default NotFound;

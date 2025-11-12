@@ -6,6 +6,7 @@ import transactionIllustration from "../../assets/trasaction.jpg";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Navigate, useNavigate } from "react-router";
 
+
 const AddTransaction = () => {
   const { user } = useContext(AuthContext);
   const [type, setType] = useState("Income");
@@ -48,11 +49,14 @@ const AddTransaction = () => {
 
   return (
     <motion.div
+    
       className="min-h-screen flex items-center justify-center bg-green-50 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
+    
+ <title>Add Transaction | Finmate</title>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl flex flex-col lg:flex-row overflow-hidden">
         {/* Illustration Side */}
         <div className="hidden lg:flex lg:w-1/2 bg-green-100 items-center justify-center p-6">

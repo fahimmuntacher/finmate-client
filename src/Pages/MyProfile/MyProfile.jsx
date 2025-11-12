@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import Spinner from "../../Components/Spinner/Spinner";
+import { Helmet } from "react-helmet";
 
 const MyProfile = () => {
   const { user, updateUserProfile, signOutUser } = useContext(AuthContext);
@@ -41,8 +42,8 @@ const MyProfile = () => {
     }
   };
 
-  if(loading){
-    return <Spinner></Spinner>
+  if (loading) {
+    return <Spinner></Spinner>;
   }
 
   return (
@@ -52,18 +53,30 @@ const MyProfile = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
+      <Helmet>
+        <title>
+          {user?.displayName
+            ? `${user.displayName} | Finmate`
+            : "My Profile | Finmate"}
+        </title>
+      </Helmet>
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 w-full max-w-md text-center border border-green-100">
         <h1 className="text-3xl font-bold text-green-500 mb-4">{name}</h1>
 
         <img
-          src={photo || "https://i.ibb.co/sJF5Gzmh/blank-profile-picture-973460-1280.webp"}
+          src={
+            photo ||
+            "https://i.ibb.co/sJF5Gzmh/blank-profile-picture-973460-1280.webp"
+          }
           alt="Profile"
           className="w-28 h-28 rounded-full mx-auto mb-5 border-4 border-green-500 shadow-md"
         />
 
         <div className="space-y-4 text-left">
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Name</label>
+            <label className="block text-gray-700 font-semibold mb-1">
+              Name
+            </label>
             <input
               type="text"
               value={name}
@@ -74,7 +87,9 @@ const MyProfile = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Photo URL</label>
+            <label className="block text-gray-700 font-semibold mb-1">
+              Photo URL
+            </label>
             <input
               type="text"
               value={photo}
@@ -85,7 +100,9 @@ const MyProfile = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">Email</label>
+            <label className="block text-gray-700 font-semibold mb-1">
+              Email
+            </label>
             <input
               type="email"
               value={user?.email || ""}
@@ -118,7 +135,9 @@ const MyProfile = () => {
 
             <form onSubmit={handleUpdate} className="space-y-4">
               <div>
-                <label className="block font-semibold text-gray-600 mb-1">Name</label>
+                <label className="block font-semibold text-gray-600 mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
                   defaultValue={name}
@@ -129,7 +148,9 @@ const MyProfile = () => {
               </div>
 
               <div>
-                <label className="block font-semibold text-gray-600 mb-1">Photo URL</label>
+                <label className="block font-semibold text-gray-600 mb-1">
+                  Photo URL
+                </label>
                 <input
                   type="text"
                   defaultValue={photo}
@@ -148,7 +169,11 @@ const MyProfile = () => {
                   Cancel
                 </button>
 
-                <button type="submit" className="border-2 border-green-400 text-lg text-white font-semibold bg-[#00C896] py-2.5 px-3.5 rounded-xl cursor-pointer" disabled={loading}>
+                <button
+                  type="submit"
+                  className="border-2 border-green-400 text-lg text-white font-semibold bg-[#00C896] py-2.5 px-3.5 rounded-xl cursor-pointer"
+                  disabled={loading}
+                >
                   {loading ? "Updating..." : "Save Changes"}
                 </button>
               </div>
