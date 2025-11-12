@@ -22,10 +22,10 @@ const StaticSections = () => {
           />
         </div>
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-3xl font-bold text-green-600 mb-4">
+          <h2 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">
             Budgeting Tips
           </h2>
-          <p className="text-gray-700 text-lg">
+          <p className="text-gray-700 dark:text-gray-300 text-lg">
             Learn simple ways to manage your income and expenses efficiently.
             Track your spending, save smartly, and stay financially healthy.
           </p>
@@ -48,10 +48,10 @@ const StaticSections = () => {
           />
         </div>
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-3xl font-bold text-green-600 mb-4">
+          <h2 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">
             Why Financial Planning Matters?
           </h2>
-          <p className="text-gray-700 text-lg">
+          <p className="text-gray-700 dark:text-gray-300 text-lg">
             Proper financial planning helps you achieve long-term goals, avoid
             unnecessary debt, and secure your future. Take control and make
             your money work for you.

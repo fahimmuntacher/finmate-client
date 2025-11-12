@@ -29,12 +29,16 @@ const bannerData = [
 
 export default function BannerSection() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden dark:bg-neutral-900">
     <BannerCarousel bannerData={bannerData}></BannerCarousel>
 
       {/* Background Shapes */}
-      <motion.div className="hidden sm:block absolute top-0 left-0 w-64 h-64 bg-green-300 rounded-full opacity-30 -translate-x-32 -translate-y-32" />
-      <motion.div className="hidden sm:block absolute bottom-0 right-0 w-80 h-80 bg-green-300 rounded-full opacity-20 translate-x-32 translate-y-32" />
+      <motion.div className="hidden sm:block absolute top-0 left-0 w-64 h-64 
+               bg-green-300 dark:bg-zinc-400 rounded-full opacity-30 
+               -translate-x-32 -translate-y-32" />
+      <motion.div className="hidden sm:block absolute bottom-0 right-0 w-80 h-80 
+               bg-green-300 dark:bg-zinc-400 rounded-full opacity-20 
+               translate-x-32 translate-y-32" />
     </section>
   );
 }

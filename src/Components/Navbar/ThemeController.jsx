@@ -8,7 +8,7 @@ const ThemeController = () => {
     }, [theme]);
 
     const handleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "forest" : "light"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
   return (
     <div>
@@ -18,7 +18,7 @@ const ThemeController = () => {
             <input
               type="checkbox"
               onChange={handleTheme}
-              checked={theme === "forest"}
+              checked={theme === "dark"}
             />
 
             {/* sun icon */}

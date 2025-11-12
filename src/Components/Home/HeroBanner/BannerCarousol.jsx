@@ -74,14 +74,14 @@ const BannerCarousel = ({ bannerData }) => {
               >
                 <h1
                   className={`text-4xl md:text-6xl font-extrabold mb-4 leading-tight drop-shadow-sm transition-colors duration-500 ${
-                    isActive ? "text-green-800" : "text-green-600"
+                    isActive ? "text-green-800 dark:text-green-400" : "text-green-600 dark:text-green-300"
                   }`}
                 >
                   {banner.title}
                 </h1>
                 <p
                   className={`text-base md:text-lg mb-6 max-w-lg mx-auto md:mx-0 transition-colors duration-500 ${
-                    isActive ? "text-gray-700" : "text-gray-500"
+                    isActive ? "text-gray-700 dark:text-gray-300" : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   {banner.desc}
@@ -92,7 +92,7 @@ const BannerCarousel = ({ bannerData }) => {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.97 }}
-                      className="px-8 py-3 rounded-xl bg-green-600 text-white font-semibold text-lg md:text-xl shadow-lg hover:bg-[#00C896] transition-all flex items-center justify-center gap-2"
+                      className="px-8 py-3 rounded-xl bg-green-600 dark:bg-green-500 text-white font-semibold text-lg md:text-xl shadow-lg hover:bg-[#00C896] transition-all flex items-center justify-center gap-2"
                     >
                       Get Started <BiRightTopArrowCircle size={24} />
                     </motion.button>

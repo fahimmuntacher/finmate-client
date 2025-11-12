@@ -52,7 +52,7 @@ const PlanCard = () => {
 
   return (
     <div className="max-w-7xl mx-auto py-16 px-6">
-      <h1 className="text-4xl font-bold text-center text-green-600 mb-12">
+      <h1 className="text-4xl font-bold text-center text-green-600 dark:text-green-400 mb-12">
         Choose Your Plan
       </h1>
 
