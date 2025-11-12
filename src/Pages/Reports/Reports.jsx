@@ -17,6 +17,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import Spinner from "../../Components/Spinner/Spinner";
 // import useAxios from "../../Hooks/useAxios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { div } from "motion/react-client";
 
 const COLORS = ["#00C896", "#FF6B6B", "#FFD93D", "#6C63FF"];
 
@@ -31,9 +32,10 @@ const Reports = () => {
 
   // Fetch data
   useEffect(() => {
-    if (!user?.email) return;
-    setLoading(true);
-    axiosSecure.get(`/transactions?email=${user.email}`).then((res) => {
+  if (!user?.email) return;
+  setLoading(true);
+  axiosSecure.get(`/transactions?email=${user.email}`)
+    .then((res) => {
       const data = res.data;
       if (selectedMonth) {
         const filtered = data.filter(
@@ -51,9 +53,14 @@ const Reports = () => {
         .filter((t) => t.type === "Expense")
         .reduce((acc, cur) => acc + Number(cur.amount), 0);
       setSummary({ income, expense, balance: Math.max(0, income - expense) });
+      setLoading(false); 
+    })
+    .catch((err) => {
+      console.error(err);
+      setLoading(false);
     });
-    setLoading(false);
-  }, [user, selectedMonth, axiosSecure]);
+}, [user, selectedMonth, axiosSecure]);
+
 
   // Pie chart data (Category-wise Expense)
   const categoryData = Object.values(
@@ -86,104 +93,104 @@ const Reports = () => {
     return <Spinner></Spinner>;
   }
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4">
-      <title>Reports | Finmate</title>
-      <h1 className="text-3xl font-bold text-green-600 mb-8 text-center">
-        Financial Reports
-      </h1>
+    <div className="dark:bg-neutral-800">
+      <div className="max-w-7xl mx-auto  py-10 px-4">
+  <title>Reports | Finmate</title>
+  <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-8 text-center">
+    Financial Reports
+  </h1>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div className="bg-green-50 border border-green-200 p-5 rounded-xl shadow text-center">
-          <h2 className="text-gray-600 font-semibold">Total Income</h2>
-          <p className="text-2xl font-bold text-green-600">${summary.income}</p>
-        </div>
-
-        <div className="bg-red-50 border border-red-200 p-5 rounded-xl shadow text-center">
-          <h2 className="text-gray-600 font-semibold">Total Expense</h2>
-          <p className="text-2xl font-bold text-red-600">${summary.expense}</p>
-        </div>
-
-        <div className="bg-yellow-50 border border-yellow-200 p-5 rounded-xl shadow text-center">
-          <h2 className="text-gray-600 font-semibold">Net Balance</h2>
-          <p
-            className={`text-2xl font-bold ${
-              summary.balance >= 0 ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            ${summary.balance}
-          </p>
-        </div>
-      </div>
-
-      {/* Filter by Month */}
-      <div className="mb-8 flex justify-center">
-        <select
-          value={selectedMonth}
-          onChange={(e) => setSelectedMonth(e.target.value)}
-          className="border border-green-400 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
-        >
-          <option value="">All Months</option>
-          {[...Array(12)].map((_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {new Date(2025, i).toLocaleString("default", { month: "long" })}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Pie Chart */}
-        <div className="bg-white border rounded-2xl p-6 shadow">
-          <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
-            Income & Expense Breakdown by Category
-          </h3>
-          {categoryData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={categoryData}
-                  dataKey="value"
-                  nameKey="name"
-                  outerRadius={120}
-                  label
-                >
-                  {categoryData.map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          ) : (
-            <p className="text-center text-gray-500">No expense data found</p>
-          )}
-        </div>
-
-        {/* Bar Chart */}
-        <div className="bg-white border rounded-2xl p-6 shadow">
-          <h3 className="text-xl font-semibold text-gray-700 mb-4 text-center">
-            Monthly Income vs Expense
-          </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={monthlyTotals}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="income" fill="#00C896" />
-              <Bar dataKey="expense" fill="#FF6B6B" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+  {/* Summary Cards */}
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+    <div className="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 p-5 rounded-xl shadow text-center">
+      <h2 className="text-gray-600 dark:text-gray-300 font-semibold">Total Income</h2>
+      <p className="text-2xl font-bold text-green-600 dark:text-green-400">${summary.income}</p>
     </div>
+
+    <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 p-5 rounded-xl shadow text-center">
+      <h2 className="text-gray-600 dark:text-gray-300 font-semibold">Total Expense</h2>
+      <p className="text-2xl font-bold text-red-600 dark:text-red-400">${summary.expense}</p>
+    </div>
+
+    <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 p-5 rounded-xl shadow text-center">
+      <h2 className="text-gray-600 dark:text-gray-300 font-semibold">Net Balance</h2>
+      <p
+        className={`text-2xl font-bold ${
+          summary.balance >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+        }`}
+      >
+        ${summary.balance}
+      </p>
+    </div>
+  </div>
+
+  {/* Filter by Month */}
+  <div className="mb-8 flex justify-center">
+    <select
+      value={selectedMonth}
+      onChange={(e) => setSelectedMonth(e.target.value)}
+      className="border border-green-400 dark:border-green-600 rounded-lg px-4 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-green-500"
+    >
+      <option value="">All Months</option>
+      {[...Array(12)].map((_, i) => (
+        <option key={i + 1} value={i + 1}>
+          {new Date(2025, i).toLocaleString("default", { month: "long" })}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Charts Section */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    {/* Pie Chart */}
+    <div className="bg-white dark:bg-gray-900 border dark:border-gray-700 rounded-2xl p-6 shadow">
+      <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
+        Income & Expense Breakdown by Category
+      </h3>
+      {categoryData.length > 0 ? (
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={categoryData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius={120}
+              label={{ fill: "#fff", fontSize: 12 }}
+            >
+              {categoryData.map((_, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <p className="text-center text-gray-500 dark:text-gray-400">No expense data found</p>
+      )}
+    </div>
+
+    {/* Bar Chart */}
+    <div className="bg-white dark:bg-gray-900 border dark:border-gray-700 rounded-2xl p-6 shadow">
+      <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
+        Monthly Income vs Expense
+      </h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={monthlyTotals}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+          <XAxis dataKey="month" stroke="#666" />
+          <YAxis stroke="#666" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="income" fill="#00C896" />
+          <Bar dataKey="expense" fill="#FF6B6B" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
+    </div>
+
   );
 };
 

@@ -82,7 +82,7 @@ const AddTransaction = () => {
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border rounded-lg px-3 py-2 dark:border-green-500  dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="Income">Income</option>
                 <option value="Expense">Expense</option>
@@ -97,7 +97,7 @@ const AddTransaction = () => {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border rounded-lg px-3 py-2 dark:border-green-500  dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
                 required
               >
                 <option value="">Select Category</option>

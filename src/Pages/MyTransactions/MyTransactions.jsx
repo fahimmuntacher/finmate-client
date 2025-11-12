@@ -78,11 +78,6 @@ const MyTransactions = () => {
             }
           });
 
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
       }
     });
   };
@@ -127,20 +122,20 @@ const MyTransactions = () => {
   if (loading) return <Spinner></Spinner>;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen dark:bg-neutral-800">
       
       <title>My Transactions | Finmate</title>
       <div className="max-w-5xl mx-auto py-10 px-4 ">
-        <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">
+        <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-6 text-center">
           My Transactions
         </h1>
 
         {/* Filter & Sort */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
           <div>
-            <label className="mr-2 font-semibold text-gray-700">Filter:</label>
+            <label className="mr-2 font-semibold text-gray-700 dark:text-gray-300">Filter:</label>
             <select
-              className="border-2 border-green-400 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+              className="border-2 border-green-400 dark:border-green-500 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 bg-white dark:bg-neutral-700 text-gray-700 dark:text-gray-300"
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
             >
@@ -151,11 +146,11 @@ const MyTransactions = () => {
           </div>
 
           <div>
-            <label className="mr-2 font-semibold text-gray-700">
+            <label className="mr-2 font-semibold text-gray-700 dark:text-gray-300">
               Sort by Date:
             </label>
             <select
-              className="border-2 border-green-400 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+              className="border-2 border-green-400 dark:border-green-500 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 bg-white dark:bg-neutral-700 text-gray-700 dark:text-gray-300"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
             >
@@ -178,17 +173,17 @@ const MyTransactions = () => {
             {transactions.map((t) => (
               <motion.div
                 key={t._id}
-                className="bg-white rounded-2xl shadow-lg p-5 border border-green-100 flex justify-between items-center"
+                className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg p-5 border border-green-100 dark:border-neutral-700 flex justify-between items-center"
                 whileHover={{ scale: 1.02 }}
               >
                 <div>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
                     {new Date(t.date).toLocaleDateString()}
                   </p>
-                  <p className="font-semibold text-gray-700">{t.description}</p>
+                  <p className="font-semibold text-gray-700 dark:text-gray-200">{t.description}</p>
                   <p
                     className={`font-bold ${
-                      t.type === "Income" ? "text-green-600" : "text-red-500"
+                      t.type === "Income" ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400"
                     }`}
                   >
                     {t.type === "Income" ? "+" : "-"}${t.amount}
@@ -199,7 +194,7 @@ const MyTransactions = () => {
                 <div className="flex gap-2">
                   {/* view detail */}
                   <Link to={`/my-transactions/transaction/${t._id}`}>
-                    <button className="px-3 py-1 rounded-lg border border-green-500 text-green-600 cursor-pointer hover:bg-green-50 transition-all">
+                    <button className="px-3 py-1 rounded-lg border border-green-500 dark:border-green-400 text-green-600 dark:text-green-400 cursor-pointer hover:bg-green-50 dark:hover:bg-green-900 transition-all">
                       View
                     </button>
                   </Link>
@@ -212,7 +207,7 @@ const MyTransactions = () => {
                       specificTransaction(t._id);
                       document.getElementById("my_modal_5").showModal();
                     }}
-                    className="px-3 py-1 rounded-lg border border-yellow-500 text-yellow-600 hover:bg-yellow-50 transition-all cursor-pointer"
+                    className="px-3 py-1 rounded-lg border border-yellow-500 dark:border-yellow-400 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900 transition-all cursor-pointer"
                   >
                     update
                   </button>
@@ -222,7 +217,7 @@ const MyTransactions = () => {
                     onClick={() => {
                       deleteTransaction(t._id);
                     }}
-                    className="px-3 py-1 rounded-lg border border-red-500 text-red-600 hover:bg-red-50 transition-all"
+                    className="px-3 py-1 rounded-lg border border-red-500 dark:border-red-400 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 transition-all cursor-pointer"
                   >
                     Delete
                   </button>
