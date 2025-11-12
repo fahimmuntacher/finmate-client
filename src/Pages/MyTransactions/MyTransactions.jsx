@@ -91,7 +91,7 @@ const MyTransactions = () => {
   const specificTransaction = (id) => {
     axiosSecure.get(`/transactions/${id}`).then((data) => {
       setDefault(data.data);
-      console.log(deafult);
+      // console.log(deafult);
     });
   };
 
@@ -106,12 +106,12 @@ const MyTransactions = () => {
       date,
       createdAt: new Date(),
     };
-    console.log(updateTrans);
+    // console.log(updateTrans);
 
    axiosSecure
       .put(`/transactions/${updateId}`, updateTrans)
       .then((data) => {
-        console.log("data after update", data);
+        // console.log("data after update", data);
         fetchTransactions();
         document.getElementById("my_modal_5").close();
         toast.success("Updated Transaction successfully!");

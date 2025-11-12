@@ -40,20 +40,20 @@ const Register = () => {
 
     createUser(email, password)
       .then((res) => {
-        setLoading(true)
-        console.log(res);
+        
+        // console.log(res);
         updateUserProfile(name, photoURL)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             navigate(from, { replace: true });
             toast.success("Account Created Successfully");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         if (err.code === "auth/email-already-in-use") {
           toast.warning("User already exists! Try logging in.");
           return
@@ -74,14 +74,14 @@ const Register = () => {
   const googleSignIn = () => {
     signInWithGoogle()
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         toast.success("Log in Successfully!", {
           position: "bottom-right",
         });
         navigate("/my-profile");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

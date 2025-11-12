@@ -47,12 +47,12 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then((res) => {
+      .then(() => {
         toast.success("Logged in with Google!");
         navigate("/my-profile");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/react-flicking": "^4.14.3",
     "@tailwindcss/vite": "^4.1.17",
     "axios": "^1.13.2",
     "firebase": "^12.5.0",

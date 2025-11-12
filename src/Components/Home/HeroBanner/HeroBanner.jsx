@@ -1,59 +1,40 @@
-import React from "react";
-import { motion } from "framer-motion";
-import bannerImage from "../../../assets/bannerImg.png"; // replace with your image
-import { BiRightTopArrowCircle } from "react-icons/bi";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
+import { BiRightTopArrowCircle } from "react-icons/bi";
+import Flicking from "@egjs/react-flicking";
+import "@egjs/react-flicking/dist/flicking.css";
+import BannerCarousel from "./BannerCarousol";
 
-const HeroBanner = () => {
+const bannerData = [
+  
+  {
+    id: 1,
+    title: "Plan today, Prosper tomorrow.",
+    desc: "Your financial success starts with one small step. Take control with Finmate.",
+    image: "https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: 2,
+    title: "Track. Save. Grow.",
+    desc: "Build wealth with consistency — Finmate helps you stay on track effortlessly.",
+    image: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    id: 3,
+    title: "Money managed, stress vanished.",
+    desc: "Visualize your goals and achieve financial freedom with ease.",
+    image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1000&q=80",
+  },
+];
+
+export default function BannerSection() {
   return (
     <section className="relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-8">
-        {/* Text Section */}
-        <motion.div
-          className="flex-1"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-green-600 mb-4">
-            Master your money, Master your future.
-          </h1>
-          <p className="text-gray-700 text-lg mb-6">
-            Track your income, expenses, and savings goals with{" "}
-            <span className="font-semibold text-green-600">Finmate</span>. Make
-            smarter financial decisions today.
-          </p>
-          <Link to="add-transaction">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-lg bg-[#00C896] text-white font-semibold text-xl shadow-lg transition-all flex items-center gap-2.5 cursor-pointer"
-            >
-              Get Started <BiRightTopArrowCircle></BiRightTopArrowCircle>
-            </motion.button>
-          </Link>
-        </motion.div>
+    <BannerCarousel bannerData={bannerData}></BannerCarousel>
 
-        {/* Image Section */}
-        <motion.div
-          className="flex-1"
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <img
-            src={bannerImage}
-            alt="Finance Illustration"
-            className="w-full rounded-2xl"
-          />
-        </motion.div>
-      </div>
-
-      {/* background shapes */}
+      {/* Background Shapes */}
       <motion.div className="hidden sm:block absolute top-0 left-0 w-64 h-64 bg-green-300 rounded-full opacity-30 -translate-x-32 -translate-y-32" />
       <motion.div className="hidden sm:block absolute bottom-0 right-0 w-80 h-80 bg-green-300 rounded-full opacity-20 translate-x-32 translate-y-32" />
     </section>
   );
-};
-
-export default HeroBanner;
+}

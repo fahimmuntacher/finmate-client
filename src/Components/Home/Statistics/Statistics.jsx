@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import useAxios from "../../../Hooks/useAxios";
 import CountUp from "react-countup";
 import { AuthContext } from "../../../Context/AuthContext";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
@@ -22,9 +21,9 @@ const Statistics = () => {
       setSummary({ income, expense, total: Math.max(income - expense, 0) });
     });
   }, [axiosSecure, user]);
-  console.log(summary);
+  // console.log(summary);
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl mx-auto px-4 mt-12">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
         <div className="sm:border-r-4 sm:border-green-600 p-5 text-center space-y-3">
           <h2 className="text-gray-600 text-3xl font-semibold">Total Income</h2>

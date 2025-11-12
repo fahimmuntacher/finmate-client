@@ -4,7 +4,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://finmate-server.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -13,7 +13,7 @@ const useAxiosSecure = () => {
   useEffect(() => {
     // request interceptor
     const requestInterceptor = instance.interceptors.request.use((config) => {
-      console.log(config);
+      // console.log(config);
       if (user?.accessToken) {
         config.headers.authorization = `Bearer ${user.accessToken}`;
       }
@@ -33,7 +33,7 @@ const useAxiosSecure = () => {
             navigate("/login");
           });
         }
-        console.log(err);
+        // console.log(err);
       }
     );
     return () => {

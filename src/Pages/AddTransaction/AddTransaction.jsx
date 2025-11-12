@@ -3,19 +3,18 @@ import { AuthContext } from "../../Context/AuthContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import transactionIllustration from "../../assets/trasaction.jpg";
-
-import useAxios from "../../Hooks/useAxios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Navigate, useNavigate } from "react-router";
 
 const AddTransaction = () => {
   const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure()
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
+  const navigate = useNavigate()
   const [amount, setAmount] = useState();
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  // const axiosInstance = useAxios()
+  const axiosSecure = useAxiosSecure();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,22 +27,23 @@ const AddTransaction = () => {
     const userEmail = e.target.email.value;
     const userName = e.target.userName.value;
     const createdAt = new Date();
-    const newTransaction = { type, category, amount, description, date, userEmail, userName, createdAt};
-    // axios
-    //   .post("http://localhost:3000/transactions", newTransaction)
-    //   .then((data) => {
-    //     console.log(data.data);
-    //     if (data.data.insertedId) {
-    //       toast.success("Transaction Added Successfully!");
-    //     }
-    //   });
-    axiosSecure.post("/transactions", newTransaction)
-    .then(data => {
-      console.log(data.data);
-      if(data.data.insertedId){
+    const newTransaction = {
+      type,
+      category,
+      amount,
+      description,
+      date,
+      userEmail,
+      userName,
+      createdAt,
+    };
+    axiosSecure.post("/transactions", newTransaction).then((data) => {
+      // console.log(data.data);
+      if (data.data.insertedId) {
         toast.success("Transaction Added Successfully!");
+        navigate("/my-transactions")
       }
-    })
+    });
   };
 
   return (

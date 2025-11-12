@@ -24,7 +24,7 @@ const MyProfile = () => {
       setPhoto(photoURL);
       toast.success("Profile updated successfully!");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to update profile");
     } finally {
       setLoading(false);
@@ -37,7 +37,7 @@ const MyProfile = () => {
       navigate("/");
       toast.warning("Signed out successfully");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
