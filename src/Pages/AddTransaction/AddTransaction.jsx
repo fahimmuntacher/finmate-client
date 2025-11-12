@@ -50,16 +50,16 @@ const AddTransaction = () => {
   return (
     <motion.div
     
-      className="min-h-screen flex items-center justify-center bg-green-50 p-6"
+      className="min-h-screen flex items-center justify-center bg-green-50 dark:bg-neutral-800 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
     
  <title>Add Transaction | Finmate</title>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl flex flex-col lg:flex-row overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl w-full max-w-6xl flex flex-col lg:flex-row overflow-hidden">
         {/* Illustration Side */}
-        <div className="hidden lg:flex lg:w-1/2 bg-green-100 items-center justify-center p-6">
+        <div className="hidden lg:flex lg:w-1/2 bg-green-100 dark:bg-neutral-700 items-center justify-center p-6">
           <img
             src={transactionIllustration}
             alt="Transaction Illustration"
@@ -69,14 +69,14 @@ const AddTransaction = () => {
 
         {/* Form Side */}
         <div className="w-full lg:w-1/2 p-8 md:p-12">
-          <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">
+          <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-6 text-center">
             Add Transaction
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Type */}
             <div>
-              <label className="block font-semibold text-gray-700 mb-1">
+              <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Type
               </label>
               <select
@@ -91,7 +91,7 @@ const AddTransaction = () => {
 
             {/* Category */}
             <div>
-              <label className="block font-semibold text-gray-700 mb-1">
+              <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Category
               </label>
               <select
@@ -123,7 +123,7 @@ const AddTransaction = () => {
 
             {/* Amount */}
             <div>
-              <label className="block font-semibold text-gray-700 mb-1">
+              <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Amount
               </label>
               <input
@@ -138,7 +138,7 @@ const AddTransaction = () => {
 
             {/* Description */}
             <div>
-              <label className="block font-semibold text-gray-700 mb-1">
+              <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Description
               </label>
               <textarea
@@ -152,7 +152,7 @@ const AddTransaction = () => {
 
             {/* Date */}
             <div>
-              <label className="block font-semibold text-gray-700 mb-1">
+              <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Date
               </label>
               <input
@@ -167,7 +167,7 @@ const AddTransaction = () => {
             {/* User Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block font-semibold text-gray-700 mb-1">
+                <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                   User Email
                 </label>
                 <input
@@ -179,7 +179,7 @@ const AddTransaction = () => {
                 />
               </div>
               <div>
-                <label className="block font-semibold text-gray-700 mb-1">
+                <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">
                   User Name
                 </label>
                 <input
@@ -197,7 +197,7 @@ const AddTransaction = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full bg-[#00C896] text-white font-semibold py-2 rounded-lg shadow-md transition-all"
+              className="w-full bg-[#00C896] dark:bg-green-500 text-white font-semibold py-2 rounded-lg shadow-md transition-all"
             >
               Add Transaction
             </motion.button>
