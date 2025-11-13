@@ -13,23 +13,48 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink className="hover:text-green-500 dark:hover:text-green-400" to="/">Home</NavLink>
+        <NavLink
+          className="hover:text-green-500 dark:hover:text-green-400"
+          to="/"
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink className="hover:text-green-500 dark:hover:text-green-400" to="/add-transaction">Add Transaction</NavLink>
+        <NavLink
+          className="hover:text-green-500 dark:hover:text-green-400"
+          to="/add-transaction"
+        >
+          Add Transaction
+        </NavLink>
       </li>
       {user && (
         <>
           <li>
-            <NavLink className="hover:text-green-500 dark:hover:text-green-400" to="my-transactions">My Transactions</NavLink>
+            <NavLink
+              className="hover:text-green-500 dark:hover:text-green-400"
+              to="my-transactions"
+            >
+              My Transactions
+            </NavLink>
           </li>
           <li>
-            <NavLink className="hover:text-green-500 dark:hover:text-green-400" to="/reports">Reports</NavLink>
+            <NavLink
+              className="hover:text-green-500 dark:hover:text-green-400"
+              to="/reports"
+            >
+              Reports
+            </NavLink>
           </li>
         </>
       )}
       <li>
-        <NavLink className="hover:text-green-500 dark:hover:text-green-400" to="/about-us">About Us</NavLink>
+        <NavLink
+          className="hover:text-green-500 dark:hover:text-green-400"
+          to="/about-us"
+        >
+          About Us
+        </NavLink>
       </li>
     </>
   );
@@ -101,11 +126,35 @@ const Navbar = () => {
               </Link>
             </span>
           ) : (
-            <Link to="/register">
-              <button className="px-4 py-2 text-xl font-semibold rounded-xl bg-[#00C896] dark:bg-green-400 text-white hover:bg-white hover:text-[#0a906e] dark:hover:text-green-700 border-2 flex items-center gap-2.5 cursor-pointer">
-                <CiLogin /> Register
-              </button>
-            </Link>
+            <div className="flex gap-4">
+              {/* Login Button */}
+              <Link to="/login">
+                <button
+                  className="hidden sm:flex px-5 py-2.5 text-lg font-semibold rounded-xl 
+          bg-[#00C896] text-white 
+          hover:bg-[#02a97e] 
+          dark:bg-[#1a1a1a] dark:text-[#00C896] dark:hover:bg-[#00C896]/10 
+          border border-[#00C896] 
+           items-center gap-2.5 cursor-pointer transition-all duration-300"
+                >
+                  <CiLogin size={22} /> Login
+                </button>
+              </Link>
+
+              {/* Register Button */}
+              <Link to="/register">
+                <button
+                  className="px-5 py-2.5 text-lg font-semibold rounded-xl 
+          bg-transparent text-[#00C896] 
+          hover:bg-[#00C896]/10 
+          dark:bg-[#00C896] dark:text-white dark:hover:bg-[#00b783] 
+          border border-[#00C896] 
+          flex items-center gap-2.5 cursor-pointer transition-all duration-300"
+                >
+                  <CiLogin size={22} /> Register
+                </button>
+              </Link>
+            </div>
           )}
         </div>
       </div>
