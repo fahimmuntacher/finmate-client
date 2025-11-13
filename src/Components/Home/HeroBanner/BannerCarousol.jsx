@@ -51,7 +51,7 @@ const BannerCarousel = ({ bannerData }) => {
           return (
             <motion.div
               key={banner.id}
-              className={`panel flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 px-4 md:px-6 transition-all duration-700 ease-out`}
+              className={`panel flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 px-4 md:px-6 transition-all duration-700 ease-out dark:bg-gray-800`}
               style={{
                 width: "85%",
                 minWidth: "300px",
