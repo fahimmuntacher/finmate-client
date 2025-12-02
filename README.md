@@ -36,6 +36,9 @@ We believe everyone deserves financial clarity. That’s why FinMate is intuitiv
 
 Check out FinMate live: [https://finmatee.netlify.app/](https://finmatee.netlify.app/)  
 
+## Server Git Repo
+Server git repo link: [https://github.com/fahimmuntacher/finmate-server1.git](https://github.com/fahimmuntacher/finmate-server1.git)
+
 ### Screenshots
 
 ![FinMate Dashboard](image.png)
